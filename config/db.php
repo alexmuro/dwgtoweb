@@ -21,7 +21,7 @@ class db {
         // LIVE DB CONNECTION SETTINGS
         $this->mysql_host = 'localhost';
         $this->mysql_username = 'root';
-        $this->mysql_password = 'am1238wk';
+        $this->mysql_password = '';
         $this->mysql_database = 'maps';
       
       $this->conn = mysql_connect($this->mysql_host, $this->mysql_username, $this->mysql_password)

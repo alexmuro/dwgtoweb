@@ -35,7 +35,8 @@ function loadFile($filename)
     $test = new db();
     $inscon = $test->importConnect();
     echo "Loading $filename. <br>";
-    $mapid = $test->do_insert(("Insert into `import_files` (name) values ('$filename')");
+    $sql = "Insert into `import_files` (name) values ('$filename')";
+    $mapid = $test->do_insert($sql);
     $layerid = 0;
     $currentLayer = '';
   	while(!feof($fh))
@@ -68,7 +69,8 @@ function loadFile($filename)
           if(!($currentLayer == $inlayer))
           {
             $currentLayer = $inlayer;
-            $layeridid = $test->do_insert(("Insert into `import_layers` (`file_id`,`name`) values ($mapid,'$currentLayer')");
+            $sql = "Insert into `import_layers` (`file_id`,`name`) values ($mapid,'$currentLayer')";
+            $layeridid = $test->do_insert($sql);
     
             echo "<h2>$currentLayer</h2>";
           }
