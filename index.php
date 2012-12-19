@@ -46,7 +46,7 @@ function load() {
 
     createBlankCanvas(map, 100, 100);
     //draw_poly(map,4,'#000');
-    draw_poly(map,3,'#00f');
+    draw_dwg(map,4,'#00f');
     //Map is intialized
 
     var marker = new google.maps.Marker({
@@ -127,24 +127,7 @@ function createBlankCanvas(map, width, height) {
 include 'config/db.php';
 $showid = 95;
 $mapid = 3;
-if($_GET['s'])
-{
-   $showid = $_GET['s'];
-   $mapid = 2;
-   /*
-   include  'models/show.php';
-   
-   if($curShow = new show($showid))
-   {
-    $mapid = $curShow->map();
-    //echo $mapid .":mapid";
-   }
-   else
-    {
-      echo "Cannot find show $showid";
-    }
-    */
-}
+
 include 'functions/drawDWG.php';
 ?>
 </head>

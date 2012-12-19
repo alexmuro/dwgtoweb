@@ -14,7 +14,7 @@ var masterBorder = [borders]
 var curCounty;
 var legendItems = Array('Rented','Reserved','Available','Pending');
 
-function draw_poly(map,id,inputcolor){
+function draw_dwg(map,id,inputcolor){
     
     //Clear Current Blocks From the Map and Restore County
     /*

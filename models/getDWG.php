@@ -8,7 +8,11 @@
    
 
     //Sql call & json encode
-    $sql = "select id,geo from dwgimport where mapid = $layerID ";
+    $sql = "SELECT import_objects.id, geodata as geo FROM import_objects
+            JOIN import_layers 
+            ON import_objects.layer_id = import_layers.id 
+            WHERE import_layers.file_id= $layerID";
+
     $rs=mysql_query($sql) or die($select."<br><br>".mysql_error());
     $results = array();
     while ( $row = mysql_fetch_assoc( $rs )) {

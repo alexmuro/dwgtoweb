@@ -18,10 +18,13 @@ class db {
   public function importConnect()
   {
     
+        $docroot = $_SERVER['DOCUMENT_ROOT'];
+        //echo "Docroot:$docroot";
         // LIVE DB CONNECTION SETTINGS
+        //laptop Docroot = /var/www
         $this->mysql_host = 'localhost';
         $this->mysql_username = 'root';
-        $this->mysql_password = '';
+        $this->mysql_password = 'am1238wk';
         $this->mysql_database = 'maps';
       
       $this->conn = mysql_connect($this->mysql_host, $this->mysql_username, $this->mysql_password)

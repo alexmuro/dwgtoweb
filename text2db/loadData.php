@@ -49,29 +49,24 @@ function loadFile($filename)
       switch ($type) 
       {
         case "TEXT":
-          //echo $theData."<br>";
-          echo parseText($theData,$layerid)."<br><br>";
-          //$test->do_query(parseText($theData,$mapid));
+          //echo parseText($theData,$layerid)."<br><br>";
+          $test->do_query(parseText($theData,$layerid));
           break;
         case "Polyline":
-          //echo $theData."<br>";
-          echo parsePolyline($theData,$layerid)."<br><br>";
-          //$test->do_query(parsePolyline($theData,$mapid));
+          //echo parsePolyline($theData,$layerid)."<br><br>";
+          $test->do_query(parsePolyline($theData,$layerid));
           break;
         case "LINE":
-          //echo $theData."<br>";
-          echo parseLine($theData,$layerid)."<br><br>";
-          //$test->do_query(parseLine($theData,$mapid));
+          //echo parseLine($theData,$layerid)."<br><br>";
+          $test->do_query(parseLine($theData,$layerid));
           break;
         case "LAYER:":
-          //$type = strtok($theData);
           $inlayer = substr($theData,7);
           if(!($currentLayer == $inlayer))
           {
             $currentLayer = $inlayer;
             $sql = "Insert into `import_layers` (`file_id`,`name`) values ($mapid,'$currentLayer')";
-            $layeridid = $test->do_insert($sql);
-    
+            $layerid = $test->do_insert($sql);
             echo "<h2>$currentLayer</h2>";
           }
 
