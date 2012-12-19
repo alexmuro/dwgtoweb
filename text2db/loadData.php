@@ -1,40 +1,25 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
 include '../config/db.php'; 
 
 date_default_timezone_set('America/New_York');
-function checkFile($filename,$fips)
-{
-  echo "<br>Check File<br>";
-  if (file_exists($filename)) { 
-  $path_parts = pathinfo($filename);
-  echo "loc:".$path_parts['dirname']."<br>";
-  echo "file:".$path_parts['basename']."<br>";
-  echo "size : " . filesize($filename) . " bytes<br>";
-  echo "last modified: " . date ("m/d/y H:i:s.", filemtime($filename))."<br>";
-  return 1;
-  }
-  else
-  {
-    echo $filename." does not exist.";
-    return 0;
-  }
-}
 
-function loadFile($filename,$mapid)
+
+function loadFile($filename)
 {
   $fileID = checkFile($filename,$infips);
   if(!$fileID)
     return 0;
 
-  
   $lines = 0;
   $handle = fopen($filename, "r");
   while(!feof($handle)){
     $line = fgets($handle);
     $lines++;
   }
+  
   fclose($handle);
-
   echo $linecount;
 
     
@@ -45,33 +30,49 @@ function loadFile($filename,$mapid)
   echo "# Objects: $lines <br>";
   echo "Type    GEO     Meta<br>";
 
-  if ($fh) 
+ if ($fh) 
   {
     $test = new db();
     $inscon = $test->importConnect();
     echo "Loading $filename. <br>";
+    $mapid = $test->do_insert(("Insert into `import_files` (name) values ('$filename')");
+    $layerid = 0;
+    $currentLayer = '';
   	while(!feof($fh))
   	{
   		
   		$theData = fgets($fh);
   		$type = strtok($theData,' ');
+      
       //echo $type."<br>";
       switch ($type) 
       {
         case "TEXT":
-          echo $theData."<br>";
-          echo parseText($theData,$mapid)."<br><br>";
-          $test->do_query(parseText($theData,$mapid));
+          //echo $theData."<br>";
+          echo parseText($theData,$layerid)."<br><br>";
+          //$test->do_query(parseText($theData,$mapid));
           break;
         case "Polyline":
-          echo $theData."<br>";
-          echo parsePolyline($theData,$mapid)."<br><br>";
-          $test->do_query(parsePolyline($theData,$mapid));
+          //echo $theData."<br>";
+          echo parsePolyline($theData,$layerid)."<br><br>";
+          //$test->do_query(parsePolyline($theData,$mapid));
           break;
         case "LINE":
-          echo $theData."<br>";
-          echo parseLine($theData,$mapid)."<br><br>";
-          $test->do_query(parseLine($theData,$mapid));
+          //echo $theData."<br>";
+          echo parseLine($theData,$layerid)."<br><br>";
+          //$test->do_query(parseLine($theData,$mapid));
+          break;
+        case "LAYER:":
+          //$type = strtok($theData);
+          $inlayer = substr($theData,7);
+          if(!($currentLayer == $inlayer))
+          {
+            $currentLayer = $inlayer;
+            $layeridid = $test->do_insert(("Insert into `import_layers` (`file_id`,`name`) values ($mapid,'$currentLayer')");
+    
+            echo "<h2>$currentLayer</h2>";
+          }
+
           break;
       }
       $count++;
@@ -108,7 +109,7 @@ function parseText($input,$mapid)
   $coord[0]['y'] = $y;
   $meta = strrev(strtok(strrev($input), ':'));
 
-  $output = "Insert into `dwgimport` (mapid,objecttype,geo,meta)  values ( $mapid ,'".mysql_real_escape_string($type)."','".mysql_real_escape_string(json_encode($coord))."','".mysql_real_escape_string($meta)."')";
+  $output = "Insert into `import_objects` (layer_id,type,geodata,meta)  values ( $mapid ,'".mysql_real_escape_string($type)."','".mysql_real_escape_string(json_encode($coord))."','".mysql_real_escape_string($meta)."')";
 
   return $output;
 }
@@ -140,11 +141,10 @@ function parsePolyline($input,$mapid)
         $i++;
         $xy= strtok(' ');
     }
-
-  $output = "Insert into `dwgimport` (mapid,objecttype,geo)  values ( $mapid ,'".mysql_real_escape_string($type)."','".mysql_real_escape_string(json_encode($coord))."')";
+    $output = "Insert into `import_objects` (layer_id,type,geodata)  values ( $mapid ,'".mysql_real_escape_string($type)."','".mysql_real_escape_string(json_encode($coord))."')";
   return $output;
 }
-function parseLine($input,$mapid)
+function parseLine($input,$layerid)
 {
   $type = strtok($input,' ');
   $coords;
@@ -184,9 +184,27 @@ function parseLine($input,$mapid)
   $coord[1]['x'] = $x;
   $coord[1]['y'] = $y;
   
-  $output = "Insert into `dwgimport` (mapid,objecttype,geo)  values ( $mapid ,'".mysql_real_escape_string($type)."','".mysql_real_escape_string(json_encode($coord))."')";
+  $output = "Insert into `import_objects` (layer_id,type,geodata)  values ( $layerid ,'".mysql_real_escape_string($type)."','".mysql_real_escape_string(json_encode($coord))."')";
   return $output;
 }
 
-loadFile('ahip-booths.txt',5);
+function checkFile($filename,$fips)
+{
+  echo "<br>Check File<br>";
+  if (file_exists($filename)) { 
+    $path_parts = pathinfo($filename);
+    echo "loc:".$path_parts['dirname']."<br>";
+    echo "file:".$path_parts['basename']."<br>";
+    echo "size : " . filesize($filename) . " bytes<br>";
+    echo "last modified: " . date ("m/d/y H:i:s.", filemtime($filename))."<br>";
+    return 1;
+  }
+  else
+  {
+    echo $filename." does not exist.";
+    return 0;
+  }
+}
+
+loadFile('expodxf.txt');
 ?>
