@@ -1,9 +1,11 @@
 <?php
  ini_set('display_errors','On');
  error_reporting(E_ALL);
+
 /**
  * USE THIS CLASS FOR SHOW SPECIFIC DATABASE
  */
+
 class db {
   private $mysql_username;
   private $mysql_password;
