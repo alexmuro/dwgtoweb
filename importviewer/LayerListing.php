@@ -5,6 +5,20 @@
 <script src='../js/getJson.js'></script>
 <script>
 jQuery(document).ready(function(){
+
+
+
+$("#test").click(function(){
+	console.log('Button Press');
+	console.log('get data extent:'+vectors.getDataExtent());
+	console.log('get extent:'+vectors.getExtent());
+	console.log(vectors.features);
+	console.log(vectors);
+	map.zoomToExtent(vectors.getDataExtent());
+	console.log(map.getZoom());
+
+});	
+
 $("#file_select").change(function() {
 	var url = '/dwgtoweb/models/getImportFile.php?id='+$(this).val();
 	console.log(url);
@@ -13,16 +27,34 @@ $("#file_select").change(function() {
 	var output = '';
 	for (var layer = 0; layer < filedata.length; layer++)
 	{
-		console.log('sss');
-
-		output += "<span class='layer_listing' value='"+filedata[layer]['id']+"'>"+filedata[layer]['id']+"-"+filedata[layer]['name']+":</span><br>";
+		output += "<div class='layer_listing' value='"+filedata[layer]['id']+"'>"+filedata[layer]['id']+"-"+filedata[layer]['name']+":</div>";
 	}
 	$('#file_listing').html(output); 
 
+	$(".layer_listing").click(function(){
+	console.log('layer clicked');
+	//console.log($(this));
+	if(!$(this).hasClass('added'))
+	{
+		$(this).addClass('added');
+		console.log('add class');
+	}
+	else
+	{
+		$(this).removeClass('added');
+		console.log('remove class');
+	}
+});
 
  });
 });
 </script>
+<style>
+.added{
+	color:#000;
+	background-color: #ccc;
+}
+</style>
 </head>
 <body>
 <div id="wrapper">
@@ -52,8 +84,8 @@ $("#file_select").change(function() {
 
 		<div id="file_listing">
 		</div>
+		<button id='test'>Run</button>
 	</div>
-	<div id 
-</div>
+	
 </body>
 </html>

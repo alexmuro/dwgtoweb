@@ -9,27 +9,34 @@
 /** api: example[tree]
  *  Tree Nodes
  *  ----------
- *  Create all kinds of tree nodes.
+ *  
+  all kinds of tree nodes.
  */
- var urls = [
-    "http://a.tile.openstreetmap.org/${z}/${x}/${y}.png",
-    "http://b.tile.openstreetmap.org/${z}/${x}/${y}.png",
-    "http://c.tile.openstreetmap.org/${z}/${x}/${y}.png"
-    ];
+
 
 var mapPanel, tree,map;
 map = new OpenLayers.Map({
                     div: "map",
                     allOverlays: true,
                     maxExtent: new OpenLayers.Bounds(
-                        1549471.9221, 6403610.94, 1550001.32545, 6404015.8
-                    )
+                        //1549471.9221, 6403610.94, 1550001.32545, 6404015.8
+                        -112.468350586,-7.740571289,-108.042639648,-3.060737305                    )
                 });
+
+map.addControl(
+                new OpenLayers.Control.MousePosition({
+                    prefix: '-',
+                    separator: ' | ',
+                    numDigits: 4,
+                    emptyString: 'x|x'
+                })
+            );
 
 // give the features some style
 var styles = new OpenLayers.StyleMap({
     "default": {
-        strokeWidth: 2
+        strokeWidth: 2,
+        fillColor:'#ffccaa'
     },
     "select": {
         strokeColor: "#0099cc",
@@ -41,15 +48,16 @@ var styles = new OpenLayers.StyleMap({
 var vectors = new OpenLayers.Layer.Vector("Lines", {
                     strategies: [new OpenLayers.Strategy.Fixed()],                
                     protocol: new OpenLayers.Protocol.HTTP({
-                        url: "../models/testdata/county-sf1.json",
+                        //url: "test.json",
+                        url: "../models/getLayerGeoJSON.php?layer=70",
                         format: new OpenLayers.Format.GeoJSON()
                     }),
                     styleMap: styles
                 });
         
 map.addLayer(vectors);
-map.zoomToMaxExtent();
-
+map.zoomToExtent(vectors.getDataExtent());
+console.log(vectors.getDataExtent());
 
 
 
@@ -60,9 +68,7 @@ Ext.onReady(function() {
         border: true,
         region: "center",
         // we do not want all overlays, to try the OverlayLayerContainer
-        map: map,
-        center: [-10165141.079578,4625473.078965],
-    zoom: 4.5    
+        map: map  
     });
 
     // create our own layer node UI class, using the TreeNodeUIEventMixin
@@ -74,8 +80,7 @@ Ext.onReady(function() {
         nodeType: "gx_baselayercontainer"
     }, {
         nodeType: "gx_overlaylayercontainer",
-        expanded: true,
-        // render the nodes inside this container with a radio button,
+        expanded: true,        // render the nodes inside this container with a radio button,
         // and assign them the group "foo".
         loader: {
             baseAttrs: {
@@ -201,3 +206,4 @@ Ext.onReady(function() {
         }
     });
 });
+map.zoomToExtent(vectors.getDataExtent());

@@ -14,9 +14,9 @@ $geo = curl_download($dataurl);
 $foo =  utf8_encode($geo);
 $geo = json_decode($foo, true);
 
-echo '<pre>';
+//echo '<pre>';
  //print_r($geo);
- echo '</pre>';
+ //echo '</pre>';
 
 $output ['type'] = 'FeatureCollection';
  
@@ -52,11 +52,11 @@ function importToGeoJSONFeature($geodata,$type,$id,$meta)
  foreach($geo as $coords)
  {  
 
-    $coordinates[$x][0] = ($coords['x']/1000);
-    $coordinates[$x][1] = ($coords['y']/1000);
+    $coordinates[$x][0] = floatval($coords['x']/1000);
+    $coordinates[$x][1] = floatval($coords['y']/1000);
     $x++;
  }
- $geometry['coordinates'] = $coordinates;
+ $geometry['coordinates'][0] = $coordinates;
  $feature['geometry'] = $geometry;
  
  //echo '<pre>';

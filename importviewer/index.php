@@ -1,6 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <title>Avail Census Viewer</title>
+        <title>Imported DWG File Viewer</title>
         
         <script src="openlayers/lib/OpenLayers.js"></script>
         <script type="text/javascript" src="resources/js/jquery-1.4.4.min.js"></script>
@@ -10,7 +10,10 @@
         <script type="text/javascript" src="resources/js/GeoExt.js"></script>
 
         <script type="text/javascript" src="tree.js"></script>
-
+        <script type="text/javascript">
+        
+        
+        </script>
     </head>
     <body>
         <div id="desc">
