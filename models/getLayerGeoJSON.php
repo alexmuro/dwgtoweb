@@ -24,7 +24,7 @@ $output ['type'] = 'FeatureCollection';
     //Sql call & json encod
     $sql = "SELECT id,meta,type,geodata as geo FROM maps.import_objects
             WHERE import_objects.layer_id= $layerID
-            AND type <> 'TEXT' ";
+            ";
 
     $rs=mysql_query($sql) or die($select."<br><br>".mysql_error());
     $results = array();
@@ -44,7 +44,14 @@ function importToGeoJSONFeature($geodata,$type,$id,$meta)
  $feature['type'] = 'Feature';
  $feature['properties'] = $properties;
  
- $geometry['type'] = 'Polygon'; 
+ if($type == 'TEXT')
+ {
+    $geometry['type'] = 'Point'; 
+ }
+ else
+ {
+    $geometry['type'] = 'Polygon'; 
+ }
  $coordinates[] = array();
  
  $geo = json_decode($geodata, true);
@@ -52,8 +59,8 @@ function importToGeoJSONFeature($geodata,$type,$id,$meta)
  foreach($geo as $coords)
  {  
 
-    $coordinates[$x][0] = floatval($coords['x']/1000);
-    $coordinates[$x][1] = floatval($coords['y']/1000);
+    $coordinates[$x][0] = floatval($coords['x']);
+    $coordinates[$x][1] = floatval($coords['y']);
     $x++;
  }
  $geometry['coordinates'][0] = $coordinates;

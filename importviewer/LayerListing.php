@@ -20,7 +20,7 @@ $("#test").click(function(){
 });	
 
 $("#file_select").change(function() {
-	var url = '/dwgtoweb/models/getImportFile.php?id='+$(this).val();
+	var url = '../models/getImportFile.php?id='+$(this).val();
 	console.log(url);
 	var filedata = getJson(url);
 	console.log(filedata);
@@ -33,16 +33,36 @@ $("#file_select").change(function() {
 
 	$(".layer_listing").click(function(){
 	console.log('layer clicked');
-	//console.log($(this));
+	console.log($(this).attr('value'));
+
+	var layerurl = "../models/getLayerGeoJSON.php?layer="+ $(this).attr('value');
+
 	if(!$(this).hasClass('added'))
 	{
 		$(this).addClass('added');
 		console.log('add class');
+		var newLayer = new OpenLayers.Layer.Vector($(this).attr('value'), {
+                    strategies: [new OpenLayers.Strategy.Fixed()],                
+                    protocol: new OpenLayers.Protocol.HTTP({
+                        //url: "test.json",
+                        url: layerurl,
+                        format: new OpenLayers.Format.GeoJSON()
+                    }),
+                    styleMap: styles,
+                    renderers: ["Canvas", "SVG", "VML"]
+                });
+        
+			map.addLayer(newLayer);
+			console.log(newLayer.getDataExtent());
 	}
 	else
 	{
-		$(this).removeClass('added');
-		console.log('remove class');
+		//$(this).removeClass('added');
+		console.log(map.getLayersByName($(this).attr('value')));
+		console.log(map.getLayersByName($(this).attr('value'))[0].getDataExtent());
+		map.zoomToExtent(map.getLayersByName($(this).attr('value'))[0].getDataExtent());
+		//map.removeLayer(map.getLayersByName($(this).attr('value'))[0]);
+		//console.log('remove class');
 	}
 });
 

@@ -203,5 +203,5 @@ function checkFile($filename,$fips)
   }
 }
 
-loadFile('expodxf.txt');
+loadFile($_GET['file']);
 ?>

@@ -24,17 +24,25 @@ class db {
         //echo "Docroot:$docroot";
         // LIVE DB CONNECTION SETTINGS
         //laptop Docroot = /var/www
-        $this->mysql_host = 'localhost';
-        $this->mysql_username = 'root';
-        $this->mysql_password = 'am1238wk';
-        $this->mysql_database = 'maps';
-      
+        if(strstr($docroot,'/usr/docs/dummy-host.example.com'))
+        //Mac Default Settings
+        {
+          $this->mysql_host = 'localhost';
+          $this->mysql_username = 'root';
+          $this->mysql_password = '';
+          $this->mysql_database = 'maps';
+        }
+        else
+        {
+          $this->mysql_host = 'localhost';
+          $this->mysql_username = 'root';
+          $this->mysql_password = 'am1238wk';
+          $this->mysql_database = 'maps';
+        }
       $this->conn = mysql_connect($this->mysql_host, $this->mysql_username, $this->mysql_password)
        or die ("Could not connect: x " . mysql_error() ." ". $this->mysql_host);
     
     mysql_select_db($this->mysql_database);
-    
-
     return $this->conn;
 
   }

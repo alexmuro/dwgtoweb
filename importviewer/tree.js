@@ -14,13 +14,15 @@
  */
 
 
-var mapPanel, tree,map;
+
 map = new OpenLayers.Map({
                     div: "map",
                     allOverlays: true,
                     maxExtent: new OpenLayers.Bounds(
                         //1549471.9221, 6403610.94, 1550001.32545, 6404015.8
-                        -112.468350586,-7.740571289,-108.042639648,-3.060737305                    )
+                       //-112468.350586,-7740.571289,-108042.639648,-3060.737305
+                       16728.126493, 30163.638527, 32248.209379,  45247.505588
+                                            )
                 });
 
 map.addControl(
@@ -31,34 +33,57 @@ map.addControl(
                     emptyString: 'x|x'
                 })
             );
+map.fractionalZoom = true;
+
+
+
 
 // give the features some style
 var styles = new OpenLayers.StyleMap({
-    "default": {
+    "default": new OpenLayers.Style( 
+    {
         strokeWidth: 2,
-        fillColor:'#ffccaa'
+        fillColor:'#ffccaa',
+        //label details
+        label : "${getLabel}",   
+        fontColor: "black",
+        fontSize: "24px",
+        fontFamily: "Courier New, monospace",
+        fontWeight: "bold",
+        labelXOffset: "0",
+        labelYOffset: "0",
+        labelOutlineColor: "white",
+        labelOutlineWidth: 3
     },
-    "select": {
-        strokeColor: "#0099cc",
-        strokeWidth: 4
-    }
+    {
+        context: {
+            getLabel: function(feature) {
+                if(String(feature.attributes.meta).trim() == "null") {
+                    return "";
+                }
+                else{
+                    
+                    return feature.attributes.meta;
+                }
+
+            }
+        }
+    }    
+    ) 
 });
 
 
-var vectors = new OpenLayers.Layer.Vector("Lines", {
+var vectors = new OpenLayers.Layer.Vector("Base Layer", {
                     strategies: [new OpenLayers.Strategy.Fixed()],                
                     protocol: new OpenLayers.Protocol.HTTP({
                         //url: "test.json",
-                        url: "../models/getLayerGeoJSON.php?layer=70",
+                        url: "../models/getLayerGeoJSON.php?layer=35",
                         format: new OpenLayers.Format.GeoJSON()
                     }),
-                    styleMap: styles
+                    styleMap: styles,
+                    renderers: ["Canvas", "SVG", "VML"]
                 });
-        
-map.addLayer(vectors);
-map.zoomToExtent(vectors.getDataExtent());
-console.log(vectors.getDataExtent());
-
+   //rmap.addLayer(vectors); 
 
 
 Ext.onReady(function() {
@@ -68,7 +93,8 @@ Ext.onReady(function() {
         border: true,
         region: "center",
         // we do not want all overlays, to try the OverlayLayerContainer
-        map: map  
+        map: map,
+        tbar: toolbarItems  
     });
 
     // create our own layer node UI class, using the TreeNodeUIEventMixin
@@ -200,8 +226,7 @@ Ext.onReady(function() {
                 collapsible: true,
                 collapseMode: "mini",
                 split: true,
-                width: 200,
-                title: "Description"
+                width: 200
             }]
         }
     });
