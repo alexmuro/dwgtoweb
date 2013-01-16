@@ -18,6 +18,14 @@
 map = new OpenLayers.Map({
                     div: "map",
                     allOverlays: true,
+                    controls: [
+            new OpenLayers.Control.TouchNavigation({
+                dragPanOptions: {
+                    enableKinetic: true
+                }
+            }),
+            new OpenLayers.Control.Zoom()
+        ],
                     maxExtent: new OpenLayers.Bounds(
                         //1549471.9221, 6403610.94, 1550001.32545, 6404015.8
                        -112468.350586,-7740.571289,-108042.639648,-3060.737305
