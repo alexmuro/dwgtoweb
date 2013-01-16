@@ -6,25 +6,32 @@
         <script type="text/javascript" src="resources/js/ext-all.js"></script>
         <script src="openlayers/lib/OpenLayers.js"></script>
         <script type="text/javascript" src="resources/js/GeoExt.js"></script>
-        
-        
-        
         <link rel="stylesheet" type="text/css" href="resources/css/ext-all.css"/>
+
+         
+
+        
         <script type="text/javascript">
         //Globals
         var mapPanel, tree,map;
-
-
         </script>
-        <script type="text/javascript" src="resources/js/toolbar.js"></script>
-        <script type="text/javascript" src="tree.js"></script>
+        <!-- Viewer Files -->
+        <script type="text/javascript" src='../js/getJson.js'></script>
+        <script type="text/javascript" src='resources/js/behavior.js'></script>
+        
+        <!-- Uploader Files -->
+        <script src="../upload/html5uploader.js"></script>
+        <link rel="stylesheet" type="text/css" href="../upload/style.css"/>
+
+        <!-- Main js file -->
+        <script type="text/javascript" src="app.js"></script>
     </head>
     <body>
-        <div id="desc">
-            <?php
-
-                include "LayerListing.php";
-            ?>
-        </div>
+    <div id="desc">
+        <?php
+         include 'LayerListing.php';
+         
+         ?>
+    </div>
     </body>
 </html>

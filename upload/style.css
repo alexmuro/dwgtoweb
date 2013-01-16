@@ -1,0 +1,39 @@
+body {
+		font-family: Verdana;
+	}
+	#box {
+		background-color: #f60;
+		width: 195px;
+		border: 1px solid #f60;
+		-webkit-border-radius: 6px;
+		-moz-border-radius: 6px;
+		border-radius: 6px;
+		padding-bottom: 10px;
+		float: left;
+	}
+	#box p {
+		font-size: 10px;
+		padding: 5px;
+		margin: 0px;
+	}
+	#drop {
+		width: 195px;
+		height: 200px;
+		background-color: #f90;
+	}
+	#status {
+		width: 195px;
+		height: 25px;
+		font-size: 10px;
+		color: #fff;
+		padding: 5px;
+	}
+	#list {
+		width: 195px;
+		font-size: 10px;
+		margin-left: 10px;
+	}
+	.addedIMG {
+		width: 100px;
+		height: 100px;
+	}

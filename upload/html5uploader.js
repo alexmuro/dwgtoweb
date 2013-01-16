@@ -81,12 +81,14 @@ function uploader(place, status, targetPHP, show) {
 				
 			// Preview images
 			this.previewNow = function(event) {		
+				/*
 				bin = preview.result;
 				var img = document.createElement("img"); 
 				img.className = 'addedIMG';
 			    img.file = file;   
 			    img.src = bin;
 				document.getElementById(show).appendChild(img);
+				*/
 			}
 
 		reader = new FileReader();

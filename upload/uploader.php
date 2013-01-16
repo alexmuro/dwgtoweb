@@ -1,6 +1,6 @@
 <?php
 // Destination folder for downloaded files
-$upload_folder = 'data';
+$upload_folder = '../cad2text/uploads/';
 
 // If the browser supports sendAsBinary () can use the array $ _FILES
 if(count($_FILES)>0) { 
