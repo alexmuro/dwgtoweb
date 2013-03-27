@@ -44,7 +44,8 @@ $(function () {
                 else{
                     $.ajax({
                     url: "../upload/totxt.php",
-                    data: {upload:file.name}
+                    data: {upload:file.name},
+                    type: "POST"
                     }).done(function(data) {
                         console.log(data);
                     });
