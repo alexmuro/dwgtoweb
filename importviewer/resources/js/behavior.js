@@ -21,6 +21,7 @@ $(document).ready(function() {
 			console.log('layer clicked');
 			console.log($(this).attr('value'));
 			var layerurl = "../models/getLayerGeoJSON.php?layer="+ $(this).attr('value');
+			console.log(layerurl);
 
 			if(!$(this).hasClass('added'))
 			{
@@ -38,7 +39,12 @@ $(document).ready(function() {
 		                });
 		        
 					map.addLayer(newLayer);
+					newLayer.events.register("loadend", newLayer, function (e) {
+					console.log('load end and move');
 					console.log(newLayer.getDataExtent());
+					map.zoomToExtent(newLayer.getDataExtent());
+					
+				});
 			}
 			else
 			{

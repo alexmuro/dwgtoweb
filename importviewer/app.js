@@ -137,6 +137,7 @@ Ext.onReady(function() {
         split: true,
         collapsible: true,
         collapseMode: "mini",
+        collapsed:true,
         autoScroll: true,
         plugins: [
             new GeoExt.plugins.TreeNodeRadioButton({
@@ -274,4 +275,3 @@ Ext.onReady(function() {
         }
     });
 });
-map.zoomToExtent(vectors.getDataExtent());

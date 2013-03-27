@@ -108,7 +108,7 @@ function loadFile($filename,$infips)
 {
    
  
-	$inscon = mysql_connect("localhost","soundtos_am3081","am1238wk");
+	$inscon = mysql_connect("localhost","root","am1238wk");
 	if (!$inscon)
 	{
 		die('Could not connect: ' . mysql_error());

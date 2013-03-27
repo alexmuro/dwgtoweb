@@ -2,6 +2,16 @@
 <script>
 Ext.onReady(function(){
     // basic tabs 1, built from existing content
-   
+    var tabs = new Ext.TabPanel({
+        renderTo: 'desc',
+        width:199,
+        activeTab: 0,
+        frame:true,
+        defaults:{autoHeight: true},
+        items:[
+            {autoLoad: {url: 'LayerListing.php'},title:'View'},
+            {contentEl:'markup', title: 'Long Text'}
+        ]
+    });
 });
 </script>

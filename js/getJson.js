@@ -1,5 +1,6 @@
 function getJson(jURL)
 {
+  console.log(jURL);
   var output;
   $.ajax({
       url: jURL,

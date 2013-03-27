@@ -1,27 +1,48 @@
-<?php
-// Destination folder for downloaded files
-$upload_folder = '../cad2text/uploads/';
-
-// If the browser supports sendAsBinary () can use the array $ _FILES
-if(count($_FILES)>0) { 
-	//if( move_uploaded_file( $_FILES['upload']['tmp_name'] , $upload_folder.'/'.$_FILES['upload']['name'] ) ) {
-	//	echo 'done';
-	//}
-	exit();
-} else if(isset($_GET['up'])) {
-	// If the browser does not support sendAsBinary ()
-	if(isset($_GET['base64'])) {
-		$content = base64_decode(file_get_contents('php://input'));
-	} else {
-		$content = file_get_contents('php://input');
-	}
-
-	$headers = getallheaders();
-	$headers = array_change_key_case($headers, CASE_UPPER);
-	
-	//if(file_put_contents($upload_folder.'/'.$headers['UP-FILENAME'], $content)) {
-	//	echo 'done';
-	//}
-	exit();
+<style>
+.bar {
+	margin:5px;
+    height: 12px;
+    background: green;
 }
-?>
+</style>
+<br>
+<hr>
+Upload DWG/DXF Files:
+<br>
+
+<input id="fileupload" type="file" name="files[]" data-url="../upload/UploadHandler.php" multiple>
+<div id="progress">
+    <div class="bar" style="width: 0%;"></div>
+</div>
+<script src="resources/js/vendor/jquery.ui.widget.js"></script>
+<script src="resources/js/jquery.iframe-transport.js"></script>
+<script src="resources/js/jquery.fileupload.js"></script>
+<script>
+$(function () {
+    $('#fileupload').fileupload({
+        dataType: 'json',
+        done: function (e, data) {
+            console.log('done');
+            console.log(data.result);
+            $.each(data.result.files, function (index, file) {
+                $('<p/>').text(file.name).appendTo('#progress');
+                if(typeof file.error != 'undefined')
+                {
+                    $('<p/>').text(file.error).appendTo('#progress');
+                }
+                
+            });
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#progress .bar').css(
+                'width',
+                progress + '%'
+            );
+        },
+        fail: function(e,data){
+             $('<p/>').text("Error uploading file: "+data.errorThrown).appendTo('#progress');;
+        }
+    });
+});
+</script>
