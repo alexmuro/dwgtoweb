@@ -38,10 +38,18 @@ $(function () {
             console.log(data.result);
             $.each(data.result.files, function (index, file) {
                 $('<p/>').text(file.name).insertAfter('#progress');
-                if(typeof file.error != 'undefined')
-                {
+                if(typeof file.error != 'undefined'){
                     $('<p/>').text(file.error).insertAfter('#progress');
                 }
+                else{
+                    $.ajax({
+                    url: "../upload/totxt.php",
+                    data: {upload:file.name}
+                    }).done(function(data) {
+                        console.log(data);
+                    });
+                }
+
                 
             });
         },
