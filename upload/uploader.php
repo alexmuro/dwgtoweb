@@ -1,7 +1,11 @@
 <style>
-#progress{
+#upload_container{
     font-family: 'Ubuntu';
-    font-size: .5em;
+    font-size: .7em;
+}
+#progress{
+    
+    border:1px solid black;
 }
 .bar {
 	margin:5px;
@@ -14,9 +18,11 @@
 Upload DWG/DXF Files:
 <br>
 
-<input id="fileupload" type="file" name="files[]" data-url="../upload/UploadHandler.php" multiple>
-<div id="progress">
-    <div class="bar" style="width: 0%;"></div>
+<div id="upload_container">
+    <input id="fileupload" type="file" name="files[]" data-url="../upload/UploadHandler.php" multiple>
+    <div id="progress">
+        <div class="bar" style="width: 0%;"></div>
+    </div>
 </div>
 <script src="resources/js/vendor/jquery.ui.widget.js"></script>
 <script src="resources/js/jquery.iframe-transport.js"></script>
@@ -29,10 +35,10 @@ $(function () {
             console.log('done');
             console.log(data.result);
             $.each(data.result.files, function (index, file) {
-                $('<p/>').text(file.name).appendTo('#progress');
+                $('<p/>').text(file.name).insertAfter('#progress');
                 if(typeof file.error != 'undefined')
                 {
-                    $('<p/>').text(file.error).appendTo('#progress');
+                    $('<p/>').text(file.error).insertAfter('#progress');
                 }
                 
             });
@@ -45,7 +51,7 @@ $(function () {
             );
         },
         fail: function(e,data){
-             $('<p/>').text("Error uploading file: "+data.errorThrown).appendTo('#progress');;
+             $('<p/>').text("Error uploading file: "+data.errorThrown).insertAfter('#progress');;
         }
     });
 });
