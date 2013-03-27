@@ -1,4 +1,5 @@
-
+<link href="resources/js/select2.css" rel="stylesheet"/>
+<script src="resources/js/select2.js"></script>
 <style>
 #wrapper{
 	height:100%;
@@ -9,6 +10,9 @@
 	background-color: #ccc;
 }
 </style>
+<script>
+  $(document).ready(function() { $("#file_select").select2(); });
+</script>
 <div id="wrapper">
 <?php
 	include '../config/db.php';

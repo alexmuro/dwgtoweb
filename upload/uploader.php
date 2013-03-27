@@ -3,10 +3,12 @@
     font-family: 'Ubuntu';
     font-size: .7em;
 }
+
 #progress{
     
     border:1px solid black;
 }
+
 .bar {
 	margin:5px;
     height: 12px;
