@@ -1,4 +1,8 @@
 <style>
+#progress{
+    font-family: 'Ubuntu';
+    font-size: .5em;
+}
 .bar {
 	margin:5px;
     height: 12px;
