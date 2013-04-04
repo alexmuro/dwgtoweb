@@ -11,7 +11,10 @@
 }
 </style>
 <script>
-  $(document).ready(function() { $("#file_select").select2(); });
+  $(document).ready(function() { 
+  	$("#file_select").select2({ width: '370px' }); 
+  });
+
 </script>
 <div id="wrapper">
 <?php

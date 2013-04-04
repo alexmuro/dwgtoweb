@@ -6,7 +6,11 @@
         <script type="text/javascript" src="resources/js/ext-all.js"></script>
         <script src="openlayers/lib/OpenLayers.js"></script>
         <script type="text/javascript" src="resources/js/GeoExt.js"></script>
+        <script type="text/javascript" src="resources/js/jquery.tablesorter.min.js"></script>
         <link rel="stylesheet" type="text/css" href="resources/css/ext-all.css"/>
+        <link rel="stylesheet" type="text/css" href="resources/css/blue-table-style.css"/>
+        
+        <link rel="stylesheet" type="text/css" href="style.css"/>
 
          
 

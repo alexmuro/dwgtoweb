@@ -67,6 +67,7 @@ OpenLayers.Format.GeoJSON = OpenLayers.Class(OpenLayers.Format.JSON, {
      *     <OpenLayers.Feature.Vector>.
      */
     read: function(json, type, filter) {
+        console.log('reading geoJSON');
         type = (type) ? type : "FeatureCollection";
         var results = null;
         var obj = null;
@@ -77,16 +78,16 @@ OpenLayers.Format.GeoJSON = OpenLayers.Class(OpenLayers.Format.JSON, {
             obj = json;
         }    
         if(!obj) {
-            OpenLayers.Console.error("Bad JSON: " + json);
+            console.error("Bad JSON: " + json);
         } else if(typeof(obj.type) != "string") {
-            OpenLayers.Console.error("Bad GeoJSON - no type: " + json);
+            console.error("Bad GeoJSON - no type: " + json);
         } else if(this.isValidType(obj, type)) {
             switch(type) {
                 case "Geometry":
                     try {
                         results = this.parseGeometry(obj);
                     } catch(err) {
-                        OpenLayers.Console.error(err);
+                        console.error(err);
                     }
                     break;
                 case "Feature":
@@ -94,7 +95,7 @@ OpenLayers.Format.GeoJSON = OpenLayers.Class(OpenLayers.Format.JSON, {
                         results = this.parseFeature(obj);
                         results.type = "Feature";
                     } catch(err) {
-                        OpenLayers.Console.error(err);
+                        console.error(err);
                     }
                     break;
                 case "FeatureCollection":
@@ -106,7 +107,7 @@ OpenLayers.Format.GeoJSON = OpenLayers.Class(OpenLayers.Format.JSON, {
                                 results.push(this.parseFeature(obj));
                             } catch(err) {
                                 results = null;
-                                OpenLayers.Console.error(err);
+                                console.error(err);
                             }
                             break;
                         case "FeatureCollection":
@@ -115,7 +116,8 @@ OpenLayers.Format.GeoJSON = OpenLayers.Class(OpenLayers.Format.JSON, {
                                     results.push(this.parseFeature(obj.features[i]));
                                 } catch(err) {
                                     results = null;
-                                    OpenLayers.Console.error(err);
+                                    console.error(err);
+                                    console.log(obj.features[i]);
                                 }
                             }
                             break;
@@ -125,7 +127,7 @@ OpenLayers.Format.GeoJSON = OpenLayers.Class(OpenLayers.Format.JSON, {
                                 results.push(new OpenLayers.Feature.Vector(geom));
                             } catch(err) {
                                 results = null;
-                                OpenLayers.Console.error(err);
+                                console.error(err);
                             }
                     }
                 break;
@@ -150,7 +152,7 @@ OpenLayers.Format.GeoJSON = OpenLayers.Class(OpenLayers.Format.JSON, {
                      "Polygon", "MultiPolygon", "Box", "GeometryCollection"],
                     obj.type) == -1) {
                     // unsupported geometry type
-                    OpenLayers.Console.error("Unsupported geometry type: " +
+                    console.error("Unsupported geometry type: " +
                                               obj.type);
                 } else {
                     valid = true;
@@ -165,7 +167,7 @@ OpenLayers.Format.GeoJSON = OpenLayers.Class(OpenLayers.Format.JSON, {
                 if(obj.type == type) {
                     valid = true;
                 } else {
-                    OpenLayers.Console.error("Cannot convert types from " +
+                    console.error("Cannot convert types from " +
                                               obj.type + " to " + type);
                 }
         }

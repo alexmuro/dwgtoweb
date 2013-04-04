@@ -13,11 +13,11 @@
   all kinds of tree nodes.
  */
 
-
-
 map = new OpenLayers.Map({
                     div: "map",
                     allOverlays: true,
+                    maxExtent:[20000, -20000, -20000, 20000],
+                    //projection:  new OpenLayers.Projection("EPSG:4326"),
                     controls: [
             new OpenLayers.Control.TouchNavigation({
                 dragPanOptions: {
@@ -25,13 +25,7 @@ map = new OpenLayers.Map({
                 }
             }),
             new OpenLayers.Control.Zoom()
-        ],
-                    maxExtent: new OpenLayers.Bounds(
-                        //1549471.9221, 6403610.94, 1550001.32545, 6404015.8
-                       -112468.350586,-7740.571289,-108042.639648,-3060.737305
-                       //16728.126493, 30163.638527, 32248.209379,  45247.505588
-                                            )
-                });
+            ]});
 
 map.addControl(
                 new OpenLayers.Control.MousePosition({
@@ -80,18 +74,18 @@ var styles = new OpenLayers.StyleMap({
     ) 
 });
 
+
 var vectors = new OpenLayers.Layer.Vector("Base Layer", {
                     strategies: [new OpenLayers.Strategy.Fixed()],                
                     protocol: new OpenLayers.Protocol.HTTP({
                         //url: "test.json",
-                        url: "route5.json",
+                        url: "../text2db/txts/surfshp/outline.geojson",
                         format: new OpenLayers.Format.GeoJSON()
                     }),
                     styleMap: styles,
                     renderers: ["Canvas", "SVG", "VML"]
                 });
    map.addLayer(vectors); 
-
 
 Ext.onReady(function() {
     // create a map panel with some layers that we will show in our layer tree
@@ -255,8 +249,6 @@ Ext.onReady(function() {
         
     });
     
-    
-
     new Ext.Viewport({
         layout: "fit",
         hideBorders: true,
@@ -270,7 +262,7 @@ Ext.onReady(function() {
                 collapsible: true,
                 collapseMode: "mini",
                 split: true,
-                width: 200
+                width: 400
             }]
         }
     });

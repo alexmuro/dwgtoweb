@@ -16,7 +16,7 @@ a img {border:none;}
  * Basic Typography
  */
 body {
-    font-family: "Lucida Grande", Verdana, Geneva, Lucida, Arial, Helvetica, sans-serif;
+    font-family: "Ubuntu", Verdana, Geneva, Lucida, Arial, Helvetica, sans-serif;
     font-size: 80%;
     color: #222;
     background: #fff;
@@ -139,5 +139,10 @@ h6 {
 }
 body {
     -webkit-text-size-adjust: none;
+}
+#layer_table{
+    font-family: 'Ubuntu';
+    font-size: .8em;
+    width:380px;
 }
 

@@ -32,7 +32,7 @@ $output ['type'] = 'FeatureCollection';
         //echo $row['type'].' - '.$row['geo'].'<br>';
     $output['features'][]=importToGeoJSONFeature($row['geo'],$row['type'],$row['id'],$row['meta']);
     }
-    echo json_encode($output); 
+    echo json_encode($output).PHP_EOL; 
 
 function importToGeoJSONFeature($geodata,$type,$id,$meta)
 {
