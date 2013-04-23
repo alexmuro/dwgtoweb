@@ -79,7 +79,7 @@ var vectors = new OpenLayers.Layer.Vector("Base Layer", {
                     strategies: [new OpenLayers.Strategy.Fixed()],                
                     protocol: new OpenLayers.Protocol.HTTP({
                         //url: "test.json",
-                        url: "../text2db/txts/surfshp/outline.geojson",
+                        url: "../text2db/txts/surfshp/surf_outline.geojson",
                         format: new OpenLayers.Format.GeoJSON()
                     }),
                     styleMap: styles,

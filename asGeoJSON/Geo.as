@@ -13,7 +13,7 @@ package {
 		import flash.net.URLLoaderDataFormat;
 		import flash.net.URLVariables;
 		
-		[SWF(backgroundColor="0xffffff", width="2000" , height = "2000")]
+		[SWF(backgroundColor="0xffffff", width="2800" , height = "2800")]
     public class Geo extends Sprite {
     var coordsTextField:TextField = new TextField();
    
@@ -25,8 +25,8 @@ package {
 				load_json("topo_expo_floor.json","topo");
         load_json("expofloor.json","geo");
 		*/		
-				load_json("surf13_l.json","geo");
-				load_json("topo_surf_fixedq1e6.json","topo");
+				load_json("../text2db/txts/surfshp/surf_outline.geojson","geo");
+				load_json("../text2db/txts/surfshp/surf_booths.geojson","geo");
 
 				stage.addEventListener( MouseEvent.MOUSE_MOVE, mouse_listener );
 				coordsTextField.x = 300;
@@ -152,12 +152,11 @@ package {
         display_txt.appendText("Num Features: "+String(data.features.length)+"\n");
         
 
-        var scale:Number = 8;//5;//8;
-        var x_offset:int =200;//22500;//200;
-        var y_offset:int =200;// 1650;//200;//
+        var scale:Number = 4.8;//5;//8;
+        var x_offset:int =-940;//22500;//200;
+        var y_offset:int =50;// 1650;//200;6/
 
         x_offset += 1000;
-        
         for(var j:int = 0; j < data.features.length;j++ )
         {
 
