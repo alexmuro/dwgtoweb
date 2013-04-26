@@ -1,4 +1,5 @@
 <?php
+ini_set("memory_limit","1024M");
  ini_set('display_errors','On');
  error_reporting(E_ALL);
 //Pass Map ID by Map ID
@@ -63,9 +64,33 @@ function importToGeoJSONFeature($geodata,$type,$id,$meta)
     $coordinates[$x][1] = floatval($coords['y']);
     $x++;
  }
- $geometry['coordinates'][0] = $coordinates;
- $feature['geometry'] = $geometry;
+
+ if($x == 2){
+
+    $geometry['type'] = 'LineString';
+    
+ }
+ if($geometry['type'] == 'Polygon'){ 
+
+    $geometry['coordinates'][0] = $coordinates;
+
+ }
+ elseif($geometry['type'] == 'LineString') {
+
+    $geometry['coordinates'] = $coordinates;
+
+ }
+ elseif($geometry['type'] == 'Point'){
+
+    $geometry['coordinates'] = $coordinates[0];
+
+ }
  
+ if($x > 1 || $geometry['type'] == 'Point'){
+
+    $feature['geometry'] = $geometry;
+
+ }
  //echo '<pre>';
  //print_r($feature);
  //echo '</pre>';

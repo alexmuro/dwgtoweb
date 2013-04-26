@@ -13,7 +13,7 @@ $(document).ready(function() {
 		var extent = [filedata['file_extent'][0],filedata['file_extent'][3],filedata['file_extent'][1],filedata['file_extent'][2]];
 		console.log(filedata['file_extent']);
 		console.log(map.getExtent());
-		map.zoomToExtent(extent);
+		//map.zoomToExtent(extent);
 		console.log(map.getExtent());
 		var count = 0;
 		$.each(filedata, function(k, v) { count++; });
@@ -45,7 +45,6 @@ $(document).ready(function() {
 		                        format: new OpenLayers.Format.GeoJSON()
 		                    }),
 		                    styleMap: styles,
-		                    projection:  new OpenLayers.Projection("EPSG:4326"),
 		                    renderers: ["Canvas", "SVG", "VML"]
 		                });
 		        

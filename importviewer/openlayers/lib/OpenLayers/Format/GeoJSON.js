@@ -67,7 +67,6 @@ OpenLayers.Format.GeoJSON = OpenLayers.Class(OpenLayers.Format.JSON, {
      *     <OpenLayers.Feature.Vector>.
      */
     read: function(json, type, filter) {
-        console.log('reading geoJSON');
         type = (type) ? type : "FeatureCollection";
         var results = null;
         var obj = null;

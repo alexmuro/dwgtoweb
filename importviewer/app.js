@@ -16,8 +16,8 @@
 map = new OpenLayers.Map({
                     div: "map",
                     allOverlays: true,
-                    maxExtent:[20000, -20000, -20000, 20000],
-                    //projection:  new OpenLayers.Projection("EPSG:4326"),
+                    maxExtent:[100000, -100000, -100000, 100000],
+                    projection:  new OpenLayers.Projection("EPSG:4326"),
                     controls: [
             new OpenLayers.Control.TouchNavigation({
                 dragPanOptions: {
@@ -49,7 +49,7 @@ var styles = new OpenLayers.StyleMap({
         //label details
         label : "${getLabel}",   
         fontColor: "black",
-        fontSize: "24px",
+        fontSize: "10px",
         fontFamily: "Courier New, monospace",
         fontWeight: "bold",
         labelXOffset: "0",
@@ -85,7 +85,7 @@ var vectors = new OpenLayers.Layer.Vector("Base Layer", {
                     styleMap: styles,
                     renderers: ["Canvas", "SVG", "VML"]
                 });
-   map.addLayer(vectors); 
+   //map.addLayer(vectors); 
 
 Ext.onReady(function() {
     // create a map panel with some layers that we will show in our layer tree

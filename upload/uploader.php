@@ -47,8 +47,23 @@ $(function () {
                     data: {upload:file.name},
                     type: "POST"
                     }).done(function(data) {
-                        console.log(data);
+                        console.log('the file:z'+data+'z');
+                        $.ajax({
+                            url: '../text2db/loadData.php',
+                            data: {file:data},
+                            type: 'GET',
+                            beforeSend: function () {
+                                $('<p/>').text('Loading... this may take several minutes.').insertAfter('#progress');
+                            }
+                            }).done(function(data) {
+                                console.log(data);
+                            }).fail(function(e) { 
+                                console.log('error');
+                                console.log(e); 
+                        });
+
                     });
+
                 }
 
                 
@@ -62,7 +77,8 @@ $(function () {
             );
         },
         fail: function(e,data){
-             $('<p/>').text("Error uploading file: "+data.errorThrown).insertAfter('#progress');;
+             $('<p/>').text("Error uploading file: "+data.errorThrown).insertAfter('#progress');
+             $('<p/>').text("Error uploading file: "+data.jqXHR.responseText).insertAfter('#progress');
         }
     });
 });

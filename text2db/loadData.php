@@ -94,7 +94,7 @@ function loadFile($filename)
           break;
       }
       $count++;
-      echo "$count / $lines </br>";
+      //echo "$count / $lines </br>";
       flush();
 
   	}
@@ -216,6 +216,8 @@ function checkFile($filename)
     return 0;
   }
 }
-
-loadFile($_GET['file']);
+$file = $_GET['file'];
+echo 'y'.$file.'y';
+echo 'x'.str_replace("'", "", $file).'x';
+loadFile(str_replace("'", "", $file));
 ?>
