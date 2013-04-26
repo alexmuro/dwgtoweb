@@ -9,7 +9,7 @@ $cmd = "../text2db/AutoCADConverter $inputfiledir $outputfiledir ";
 exec($cmd,$output,$return);
 //print_r($output);
 if(!$return){
-	echo $outputfiledir;
+	echo urlencode($outputfiledir);
 }
 else
 {
