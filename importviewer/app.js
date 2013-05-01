@@ -16,7 +16,7 @@
 map = new OpenLayers.Map({
                     div: "map",
                     allOverlays: true,
-                    maxExtent:[100000, -100000, -100000, 100000],
+                    maxExtent:[-30000, -30000, 30000, 30000],
                     projection:  new OpenLayers.Projection("EPSG:4326"),
                     controls: [
             new OpenLayers.Control.TouchNavigation({
@@ -31,8 +31,8 @@ map.addControl(
                 new OpenLayers.Control.MousePosition({
                     prefix: '-',
                     separator: ' | ',
-                    numDigits: 4,
-                    emptyString: 'x|x'
+                    numDigits: 4
+,                    emptyString: 'x|x'
                 })
             );
 map.fractionalZoom = true;
@@ -45,17 +45,17 @@ var styles = new OpenLayers.StyleMap({
     "default": new OpenLayers.Style( 
     {
         strokeWidth: 2,
-        fillColor:'#ffccaa',
-        //label details
-        label : "${getLabel}",   
-        fontColor: "black",
-        fontSize: "10px",
-        fontFamily: "Courier New, monospace",
-        fontWeight: "bold",
-        labelXOffset: "0",
-        labelYOffset: "0",
-        labelOutlineColor: "white",
-        labelOutlineWidth: 3
+        fillColor:'#ffccaa'//,
+        // //label details
+        // label : "${getLabel}",   
+        // fontColor: "black",
+        // fontSize: "10px",
+        // fontFamily: "Courier New, monospace",
+        // fontWeight: "bold",
+        // labelXOffset: "0",
+        // labelYOffset: "0",
+        // labelOutlineColor: "white",
+        // labelOutlineWidth: 3
     },
     {
         context: {

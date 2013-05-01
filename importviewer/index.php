@@ -32,6 +32,8 @@
     <body>
     <div id="desc">
         <?php
+        ini_set('max_upload_filesize', 200);
+        ini_set('post_max_size', 200);
          include 'partials/LayerListing.php';
          
          ?>

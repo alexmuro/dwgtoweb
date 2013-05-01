@@ -51,7 +51,7 @@ $(function () {
                         $.ajax({
                             url: '../text2db/loadData.php',
                             data: {file:data},
-                            type: 'GET',
+                            type: 'POST',
                             beforeSend: function () {
                                 $('<p/>').text('Loading... this may take several minutes.').insertAfter('#progress');
                             }

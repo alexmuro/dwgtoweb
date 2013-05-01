@@ -80,13 +80,13 @@ function loadFile($filename)
             $layerids[$inlayer] = $layerid;
             global $layer_extent;
             global $file_extent;
-            echo 'Layer Extent:'.json_encode($layer_extent).'<br>';
-            echo 'File Extent:'.json_encode($file_extent).'<br>';
-            echo 'Poly:'.$poly.' Text:'.$text.' Line:'.$line.'<br>';
+            //echo 'Layer Extent:'.json_encode($layer_extent).'<br>';
+            //echo 'File Extent:'.json_encode($file_extent).'<br>';
+            //echo 'Poly:'.$poly.' Text:'.$text.' Line:'.$line.'<br>';
             
             $text = 0;$poly=0;$line = 0;
             unset($GLOBALS['layer_extent']);  
-            echo "<h2>$currentLayer</h2>";
+            //echo "<h2>$currentLayer</h2>";
           }else{
             $layerid = $layerids[$inlayer];
           }
@@ -216,7 +216,7 @@ function checkFile($filename)
     return 0;
   }
 }
-$file = $_GET['file'];
+$file = $_POST['file'];
 echo 'y'.$file.'y';
 echo 'x'.str_replace("'", "", $file).'x';
 loadFile(str_replace("'", "", $file));

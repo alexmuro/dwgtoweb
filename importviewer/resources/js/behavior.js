@@ -14,13 +14,13 @@ $(document).ready(function() {
 		console.log(filedata['file_extent']);
 		console.log(map.getExtent());
 		//map.zoomToExtent(extent);
-		console.log(map.getExtent());
+		
 		var count = 0;
 		$.each(filedata, function(k, v) { count++; });
-		var output = '<table id="layer_table" class="tablesorter"><thead><tr><th>Layer Name</th><th>Num Polygons</th><th>Num Text</th><th>Num Lines</th></tr></thead><tbody>';
+		var output = '<table id="layer_table" class="tablesorter"><thead><tr><th>Layer Name</th><th>Num Polygons</th><th>Num Text</th><th>Num Lines</th><th>label</th><th>select</th></tr></thead><tbody>';
 		for (var layer = 0; layer < count-1; layer++)
 		{
-			output += "<tr><td><div class='layer_listing' value='"+filedata[layer].id+"'>"+filedata[layer].id+"-"+filedata[layer].name.substring(0,12)+":</div></td><td>"+filedata[layer].num_poly+"</td><td>"+filedata[layer].num_text+"</td><td>"+filedata[layer].num_lines+"</td></tr>";
+			output += "<tr><td><div class='layer_listing' value='"+filedata[layer].id+"'>"+filedata[layer].id+"-"+filedata[layer].name.substring(0,12)+":</div></td><td>"+filedata[layer].num_poly+"</td><td>"+filedata[layer].num_text+"</td><td>"+filedata[layer].num_lines+"</td><td><input type='checkbox' class='labelcheck' data-layerid='"+filedata[layer].id+"'></td><td><select><option value='none'></option><option value='floor'>Floor</option><option value='booths'>Booths</option><option value='booth_num'>Booth Numbers</option></select></td></tr>";
 		}
 		output+='</tbody></table>'
 		$('#file_listing').html(output);
@@ -54,6 +54,7 @@ $(document).ready(function() {
 						console.log(map.getProjectionObject());
 						console.log('load end and move- Extent:');
 						console.log(newLayer);
+						map.zoomToExtent(extent);
 					});
 			}
 			else
