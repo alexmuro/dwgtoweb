@@ -1,40 +1,27 @@
+
+
 <?php
  $booths = ['28180'];//$_GET['booths']
- $floor = ['28178','28177'];//$_GET['floor']
+ $floor = ['28178'];//$_GET['floor']
+ $event_cycle_id = '333';//$_GET['event_cycle_id']
 ?>
+
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src='../resources/js/topojson_parser/topojson_parser.js'></script>
 <script src="logic.js"></script>
+
 <script>
 var max_square = 2800;
 var padding = 20;
 var maxX,maxY,minX,minY;
 var translateX,translateY;
 var scale;
-
-
-booths = <?php echo json_encode($booths);?>;
-floor = <?php echo json_encode($floor);?>;
 var floor_data = {};
 var booth_data = {};
 
-console.log(floor.length + " " + floor[0]);
-/*
-for(var i =0;i<floor.length;i++){
-	var layerurl = "../models/getLayerGeoJSON.php?layer="+String(floor[i]);
-	$.ajax( {url:layerurl,async:false} )
-    .done(function(data) { 
-    	floor_data[i] = JSON.parse(data);
-    })
-    .fail(function() { console.error("loading error"); });
-}
-for(var i =0;i<booths.length;i++){
-	var layerurl = "../models/getLayerGeoJSON.php?layer="+String(booths[i]);
-	$.ajax( {url:layerurl,async:false} )
-    .done(function(data) { 
-    	booth_data[i] = JSON.parse(data);
-    })
-    .fail(function() { console.error("loading error"); });
-}*/
+booths = <?php echo json_encode($booths);?>;
+floor = <?php echo json_encode($floor);?>;
+event_cycle_id= <?php echo json_encode($event_cycle_id);?>;
 
 booth_data = loadData(booths);
 floor_data = loadData(floor);
@@ -54,27 +41,42 @@ if(width >= height){
 translateX = (minX*-1)+padding;
 translateY = (maxY*-1)+padding;
 
-console.log("max_X:"+maxX);
-console.log("Min X:"+minX);
-console.log("max_y:"+maxY);
-console.log("Min Y:"+minY);
-console.log("width:"+width);
-console.log("height:"+height);
-console.log("scale:"+scale);
-console.log("translateX:"+ translateX);
-console.log("translateY:"+ translateY);
-console.log("maxY/scale:"+ (maxY/scale));
-console.log("maxX/scale:"+ (maxX/scale));
-console.log("scaled width:"+ ((maxX/scale)-(minX/scale)));
-console.log("scaled height:"+ ((maxY/scale)-(minY/scale)));
+scaleFloor(floor_data,scale,translateX,translateY);
 
+//topofloor = geo2topo(floor_data);
+//topofloor =JSON.parse(topofloor)
 
-booth_output = createBooths(booth_data);
-console.log(booth_output);
-//sendToImport(booth_output,492);
-//testImport(booth_output,492);
-var mapid = createMap(492);
-console.log(mapid);
-sendToImport(booth_output,492,mapid);
+console.log(floor_data);
+console.log(JSON.stringify(floor_data));
+$('body').html();
+//console.log(floor_data);
+//console.log(JSON.parse(topofloor));
+// condensed = topoparser.convert(topofloor);
+// console.log(condensed);
+//topofloor = JSON.stringify(floor_data); // Keep as geoJSON
+
+// map_id = createMap(event_cycle_id,topofloor);
+// booth_output = geo2Booths(booth_data);
+// sendToImport(booth_output,event_cycle_id,map_id);
+// console.log('map created');
+// console.log(map_id);
+
+// test = JSON.parse(topofloor);
+// console.log(test);
+
+// console.log("max_X:"+maxX);
+// console.log("Min X:"+minX);
+// console.log("max_y:"+maxY);
+// console.log("Min Y:"+minY);
+// console.log("width:"+width);
+// console.log("height:"+height);
+// console.log("scale:"+scale);
+// console.log("translateX:"+ translateX);
+// console.log("translateY:"+ translateY);
+// console.log("maxY/scale:"+ (maxY/scale));
+// console.log("maxX/scale:"+ (maxX/scale));
+// console.log("scaled width:"+ ((maxX/scale)-(minX/scale)));
+// console.log("scaled height:"+ ((maxY/scale)-(minY/scale)));
+
 
 </script>

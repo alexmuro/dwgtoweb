@@ -9,15 +9,7 @@ include '../config/db.php';
 $test = new db();
 $inscon = $test->importConnect();
 
-$dataurl = "http://localhost/dwgtoweb/models/testdata/roads.json";
-//echo $dataurl;
-$geo = curl_download($dataurl);
-$foo =  utf8_encode($geo);
-$geo = json_decode($foo, true);
 
-//echo '<pre>';
- //print_r($geo);
- //echo '</pre>';
 
 $output ['type'] = 'FeatureCollection';
  

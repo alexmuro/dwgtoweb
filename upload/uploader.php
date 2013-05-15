@@ -26,9 +26,9 @@ Upload DWG/DXF Files:
         <div class="bar" style="width: 0%;"></div>
     </div>
 </div>
-<script src="resources/js/vendor/jquery.ui.widget.js"></script>
-<script src="resources/js/jquery.iframe-transport.js"></script>
-<script src="resources/js/jquery.fileupload.js"></script>
+<script src="../resources/js/vendor/jquery.ui.widget.js"></script>
+<script src="../resources/js/jquery.iframe-transport.js"></script>
+<script src="../resources/js/jquery.fileupload.js"></script>
 <script>
 $(function () {
     $('#fileupload').fileupload({
