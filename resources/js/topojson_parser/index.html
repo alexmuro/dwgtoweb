@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+	<head>
+		<title>TopoJSON Parser Example</title>
+	</head>
+	
+	<body>
+		
+			<h2>Topo JSON Parser</h2>
+		
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/json3/3.2.4/json3.min.js"></script>
+		<script src="topojson_data.js"></script>
+		<script src="topojson_parser.js"></script>
+		<script>
+			topoparser.scale = 4.8;
+			topoparser.offset = { x: 100, y: 70 };
+			var optimizedTopology = topoparser.convert(data);
+			
+			console.log(optimizedTopology);
+
+			/* Uncomment to stringify */
+			// console.log(JSON.stringify(optimizedTopology));
+
+			/* Wrap the stringified data in <topology></topology> as follows */
+
+			/*
+			'<map scale="4.7546428675">
+				<floorplan x="0" y="0" w="1380" h="2748" type="FloorPlan Type: SWF w/ Resources" rotation="0" id="3.1">
+					<topology> 
+						{"geometries":[[[809,20],[823,20]],[[841,20],[855,20]],[[794,20],[808,20]],[[855,11][44,1746]]]}
+					</topology>
+				</floorplan>
+				<mask x="0" y="0" w="1380" h="2748" enabled="0" id="3.2"/>
+				<background x="0" y="0" w="1442.7" h="2799.05" id="3.3"/>
+				<obstructions/>
+			</map>'
+			*/
+
+		</script>
+	
+	</body>
+</html>

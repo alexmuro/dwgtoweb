@@ -1,0 +1,42 @@
+html, body{
+    margin: 0;
+    padding: 0;
+    height: 100%;   
+}
+
+#wrapper
+{
+    width: 100%;    
+}
+
+#map{
+    float:right;
+    width: 100%;
+    height: 100%;
+}
+
+#left{
+    position: absolute;
+    width: 200px;
+
+}
+
+#text {
+    width: 200px;
+    height:400px;
+    z-index: 20000;
+    background-color: white;
+    padding: 0 0.5em 0.5em 0.5em;
+
+}
+
+#legend{
+    width: 200px;
+    height:200px;
+    background-color: white;
+    padding: 0 0.5em 0.5em 0.5em;
+
+}
+.display{
+    font-size:.8em;
+}
