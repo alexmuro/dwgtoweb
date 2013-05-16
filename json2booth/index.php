@@ -2,7 +2,7 @@
 
 <?php
  $booths = ['28180'];//$_GET['booths']
- $floor = ['28178'];//$_GET['floor']
+ $floor = ['28188'];//$_GET['floor']
  $event_cycle_id = '333';//$_GET['event_cycle_id']
 ?>
 
@@ -41,18 +41,35 @@ if(width >= height){
 translateX = (minX*-1)+padding;
 translateY = (maxY*-1)+padding;
 
-scaleFloor(floor_data,scale,translateX,translateY);
+console.log("max_X:"+maxX);
+console.log("Min X:"+minX);
+console.log("max_y:"+maxY);
+console.log("Min Y:"+minY);
+console.log("width:"+width);
+console.log("height:"+height);
+console.log("scale:"+scale);
+console.log("translateX:"+ translateX);
+console.log("translateY:"+ translateY);
+console.log("maxY/scale:"+ (maxY/scale));
+console.log("maxX/scale:"+ (maxX/scale));
+console.log("scaled width:"+ ((maxX/scale)-(minX/scale)));
+console.log("scaled height:"+ ((maxY/scale)-(minY/scale)));
 
-//topofloor = geo2topo(floor_data);
-//topofloor =JSON.parse(topofloor)
 
 console.log(floor_data);
-console.log(JSON.stringify(floor_data));
-$('body').html();
-//console.log(floor_data);
-//console.log(JSON.parse(topofloor));
-// condensed = topoparser.convert(topofloor);
-// console.log(condensed);
+scaled_floor=scaleFloor(floor_data,scale,translateX,translateY);
+
+console.log(scaled_floor.features[0].geometry.coordinates[0][0]);
+console.log(floor_data.features[0].geometry.coordinates[0][0]);
+console.log(scaled_floor);
+topofloor = geo2topo(floor_data);
+topofloor =JSON.stringify(topofloor)
+
+console.log(topofloor);
+
+
+condensed = topoparser.convert(topofloor);
+console.log(condensed);
 //topofloor = JSON.stringify(floor_data); // Keep as geoJSON
 
 // map_id = createMap(event_cycle_id,topofloor);
@@ -64,19 +81,7 @@ $('body').html();
 // test = JSON.parse(topofloor);
 // console.log(test);
 
-// console.log("max_X:"+maxX);
-// console.log("Min X:"+minX);
-// console.log("max_y:"+maxY);
-// console.log("Min Y:"+minY);
-// console.log("width:"+width);
-// console.log("height:"+height);
-// console.log("scale:"+scale);
-// console.log("translateX:"+ translateX);
-// console.log("translateY:"+ translateY);
-// console.log("maxY/scale:"+ (maxY/scale));
-// console.log("maxX/scale:"+ (maxX/scale));
-// console.log("scaled width:"+ ((maxX/scale)-(minX/scale)));
-// console.log("scaled height:"+ ((maxY/scale)-(minY/scale)));
+
 
 
 </script>

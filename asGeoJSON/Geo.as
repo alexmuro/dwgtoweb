@@ -25,8 +25,8 @@ package {
 			load_json("topo_expo_floor.json","topo");
       load_json("expofloor.json","geo");
 	*/		
-			load_json("surf_outline.topojson","topo");
-			load_json("surf_booths.geojson","geo");
+			load_json("surf_test.json","topo");
+			//load_json("surf_booths.geojson","geo");
 
 			stage.addEventListener( MouseEvent.MOUSE_MOVE, mouse_listener );
 			coordsTextField.x = 300;
@@ -123,7 +123,7 @@ package {
 					var jbooth:Sprite = drawPolygon(pathInfo,0x00FF00,1);
 
 					if(j == 1 || j == 10 || j == 1761){
-						//booth_txt.appendText(String(j)+":"+String(jbooth.getBounds(stage)+",num coords:"+num_coords+"object type:"+object_type+"\n"));
+						booth_txt.appendText(String(j)+":"+String(jbooth.getBounds(stage)+",num coords:"+num_coords+"object type:"+object_type+"\n"));
 					}
 					addChild(jbooth);
 				}

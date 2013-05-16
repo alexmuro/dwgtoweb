@@ -14,12 +14,11 @@ function loadData(layers){
 
 function geo2topo(geolayers){
 	var output_data = {};
-		var layerurl = "../data/read/getGeo2Topo.php";
-		console.log('logic:geo2topo')
-		console.log(geolayers);
-		$.ajax( {url:layerurl,type:"POST",data:{layers:geolayers},async:false} )
+		var layerurl = "http://127.0.0.1:7090";
+		var jstring = JSON.stringify(geolayers);
+		$.ajax( {url:layerurl,type:"POST",data:{layers:jstring},async:false} )
 	    .done(function(data) { 
-	    	console.log(JSON.parse(data))
+	    	//console.log(JSON.parse(data))
 	    	output_data = data;
 	    })
 	    .fail(function(data) { console.log(data); });
@@ -29,16 +28,26 @@ function geo2topo(geolayers){
 
 
 function scaleFloor(input_data,scale,translateX,translateY){
-	features = input_data.features;
-	for(var y=0;y<features.length;y++){
-		if(typeof features[y].geometry != 'undefined'){
-			coordinates = features[y].geometry.coordinates[0];
-			for(var x = 0;x < coordinates.length;x++){
-				input_data.features[y].geometry.coordinates[0][x][0] = Math.abs(input_data.features[y].geometry.coordinates[0][x][0]/scale)+translateX;
-				input_data.features[y].geometry.coordinates[0][x][1] = Math.abs(input_data.features[y].geometry.coordinates[0][x][1]/scale)+translateY;
+	console.log('scale:'+scale);
+	wierd_name = input_data;
+	for(var y=0;y<input_data.features.length;y++){
+		if(typeof input_data.features[y].geometry != 'undefined'){
+
+			for(var x = 0;x < input_data.features[y].geometry.coordinates.length;x++){
+				if(typeof input_data.features[y].geometry.coordinates[x] != 'undefined'){
+					console.log("x:"+x+"y:"+y);
+					testx =  Math.abs((input_data.features[y].geometry.coordinates[x][0]+translateX)/scale) || 0;
+					testy =  Math.abs((input_data.features[y].geometry.coordinates[x][1]+translateY)/scale) || 0;
+					wierd_name.features[y].geometry.coordinates[x][0] = testx;
+					wierd_name.features[y].geometry.coordinates[x][1] = testy;
+					console.log('output:'+wierd_name.features[y].geometry.coordinates[x][0]);
+				}
+
 			}
 		}
 	}
+	
+	return wierd_name;
 }
 
 function geo2Booths(input_data){

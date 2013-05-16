@@ -23,9 +23,10 @@ var topoparser =  {
 	{
 
 		if(!topology) return undefined; // No topology *EXIT*
+		if (!topology.transform) return undefined; // No transform *EXIT*
 
 		this.transform = topology.transform;
-		if (!this.transform) return undefined; // No transform *EXIT*
+		this.cleanseTransform(); 
 
 		var TYPE_POINT = "Point";
 		var TYPE_LINE = "LineString";
@@ -36,7 +37,6 @@ var topoparser =  {
 		var keys = Object.keys(objects);
 		
 		if (keys.length == 0) return undefined; // No outline info *EXIT*
-
 
 		var geometries = objects[keys[0]].geometries;
 		var optimizedGeometries = [];
@@ -60,6 +60,8 @@ var topoparser =  {
 			arcReferences = geometry.type == TYPE_LINE ?  geometry.arcs : geometry.arcs[0];
 			arcReferencesCount = arcReferences.length;
 			
+
+
 			for (j = 0; j < arcReferencesCount; j++)
 			{
 				if(arcReferences[j] >= 0)
@@ -74,7 +76,7 @@ var topoparser =  {
 					arc = arcs[reverserArcIndex];
 					coordinates = this.arcToCoordinates(arc).reverse();	
 				}
-				
+
 				optimizedGeometries.push(coordinates);	
 				
 			}
@@ -87,6 +89,8 @@ var topoparser =  {
 	{
 		var x = 0;
 		var y = 0;
+		var tx = 0;
+		var ty = 0;
 		var transform = this.transform;
 		var scale = this.scale;
 		var offset = this.offset;
@@ -94,10 +98,18 @@ var topoparser =  {
 		return arc.map(function(point)
 		{
 			return [
-			  Math.floor((((x += point[0]) * transform.scale[0] + transform.translate[0]) / scale) + offset.x),
-			  Math.floor((((y += point[1]) * transform.scale[1] + transform.translate[1]) / scale) + offset.y)
+				Math.floor((((x += point[0]) * transform.scale[0] + transform.translate[0]) / scale) + offset.x),
+				Math.floor((((y += point[1]) * transform.scale[1] + transform.translate[1]) / scale) + offset.y)
 			];
 		});
+	},
+	cleanseTransform:function cleanseTransform()
+	{
+		this.transform.scale[0] = parseFloat(this.transform.scale[0]);
+		this.transform.scale[1] = parseFloat(this.transform.scale[1]);
+
+		this.transform.translate[0] = parseFloat(this.transform.translate[0]);
+		this.transform.translate[1] = parseFloat(this.transform.translate[1]);
 	}
 
 }
