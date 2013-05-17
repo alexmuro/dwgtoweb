@@ -18,7 +18,7 @@ http.createServer(function (req, res) {
         var newGeo = {}
         newGeo['type'] = 'FeatureCollection';
         newGeo['features'] = geoJSON.features;
-        var topo = topojson.topology({geo:geoJSON},{quantization:6});
+        var topo = topojson.topology({geo:geoJSON},{quantization:1e6,verbose:true});
         res.setHeader('Access-Control-Allow-Origin', "*");
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.write(JSON.stringify(topo));

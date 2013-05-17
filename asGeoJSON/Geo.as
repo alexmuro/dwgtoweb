@@ -25,8 +25,8 @@ package {
 			load_json("topo_expo_floor.json","topo");
       load_json("expofloor.json","geo");
 	*/		
-			load_json("surf_test.json","topo");
-			//load_json("surf_booths.geojson","geo");
+			load_json("surf_outline.topojson","topo");
+			//load_json("surf_outline.geojson","geo");
 
 			stage.addEventListener( MouseEvent.MOUSE_MOVE, mouse_listener );
 			coordsTextField.x = 300;
@@ -79,7 +79,7 @@ package {
       for (var first_obj:String in data.objects) break;
       display_txt.appendText("Num Features: "+String(data.objects[first_obj].geometries.length)+"\n");
 			var geometries:Object = data.objects[first_obj].geometries;
-			// display_txt.appendText("Geom Length: "+String(geometries.length)+"\n");
+			 display_txt.appendText("Geom Length: "+String(geometries.length)+"\n");
 			for(var j:int=0; j < geometries.length; j++){
 				if(j > 1500){	
 					//booth_txt.appendText(String(j)+":"+String(geometries[j].type)+"\n");
@@ -162,9 +162,9 @@ package {
       display_txt.appendText("Num Features: "+String(data.features.length)+"\n");
       
 
-      var scale:Number = 4.8;//5;//8;
-      var x_offset:int =-900;//22500;//200;
-      var y_offset:int =70;// 1650;//200;6/
+      var scale:Number = 5;//5;//8;
+      var x_offset:int =-5000;//22500;//200;
+      var y_offset:int =00;// 1650;//200;6/
 
       x_offset += 1000;
       for(var j:int = 0; j < data.features.length;j++ )
@@ -186,7 +186,7 @@ package {
 					var jbooth:Sprite = drawPolygon(pathInfo,0x00FF00,1);
 
 					if(j == 1 || j == 1000 || j == 10000){
-						//booth_txt.appendText(String(j)+":"+String(jbooth.getBounds(stage)+",num coords:"+num_coords+"object type:"+object_type+"\n"));
+						booth_txt.appendText(String(j)+":"+String(jbooth.getBounds(stage)+",num coords:"+num_coords+"object type:"+object_type+"\n"));
 					}
 					addChild(jbooth);
 				

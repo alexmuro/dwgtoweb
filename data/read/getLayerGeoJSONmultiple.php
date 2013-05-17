@@ -32,7 +32,7 @@ function importToGeoJSONFeature($geodata,$type,$id,$meta)
 
 
  $properties['id'] = $id;
- $properties['meta'] = $meta;
+ $properties['meta'] = trim($meta);
 
  $feature['type'] = 'Feature';
  $feature['properties'] = $properties;

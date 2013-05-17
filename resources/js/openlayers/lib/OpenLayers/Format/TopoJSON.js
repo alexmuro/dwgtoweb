@@ -63,26 +63,58 @@ OpenLayers.Format.TopoJSON = OpenLayers.Class(OpenLayers.Format.JSON, {
             //console.log('57 topo geom'+topo_geom);
             for (_i = 0, _len = topo_geom.length; _i < _len; _i++) {
               o = topo_geom[_i];
-              //console.log(o);
-              points = [];
-              _ref = o.coordinates[0];
-              for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
-                coords = _ref[_j];
-                x = coords[0];
-                y = coords[1];
-                point = new OpenLayers.Geometry.Point(x, y);
-                points.push(point);
+              if(typeof o != 'undefined'){
+                points = [];
+                if(o.type == 'Polygon'){
+                  _ref = o.coordinates[0];
+                  for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
+                    coords = _ref[_j];
+                    x = coords[0];
+                    y = coords[1];
+                    point = new OpenLayers.Geometry.Point(x, y);
+                    points.push(point);
+                  }
+                  console.log(points);
+                }
+                if(o.type == 'LineString'){
+                  _ref = o.coordinates;
+                  for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
+                    coords = _ref[_j];
+                    x = coords[0];
+                    y = coords[1];
+                    point = new OpenLayers.Geometry.Point(x, y);
+                    points.push(point);
+                  }
+                 
+                }
+                //console.log(o.type);
+                //TODO: make sure actually is a Polygon.
+                // TopoJSON can specify other types as well
+                if(o.type == 'Polygon'){
+                  //console.log('poly');
+                  ///console.log(points);
+                  // ring = new OpenLayers.Geometry.LinearRing(points);
+                  // poly = new OpenLayers.Geometry.Polygon(ring);
+                  // feature = new OpenLayers.Feature.Vector(poly);
+                  // if (o.properties != null) {
+                  //   feature.attributes = o.properties;
+                  //   feature.data= o.properties;
+                  // }
+                  // results.push(feature);
+                }
+                if(o.type == 'LineString'){
+                  // console.log('line');
+                  //console.log(points);
+                  //line = OpenLayers.Geometry.LinearRing(points);
+                  // feature = new OpenLayers.Feature.Vector(line);
+                  // if (o.properties != null) {
+                  //   feature.attributes = o.properties;
+                  //   feature.data= o.properties;
+                  // }
+                  // results.push(feature);
+                }
+                
               }
-              //TODO: make sure actually is a Polygon.
-              // TopoJSON can specify other types as well
-              ring = new OpenLayers.Geometry.LinearRing(points);
-              poly = new OpenLayers.Geometry.Polygon(ring);
-              feature = new OpenLayers.Feature.Vector(poly);
-              if (o.properties != null) {
-                feature.attributes = o.properties;
-                feature.data= o.properties;
-              }
-              results.push(feature);
             }
           }
         }
@@ -298,8 +330,11 @@ OpenLayers.Format.TopoJSON = OpenLayers.Class(OpenLayers.Format.JSON, {
 
         function geometry(o) {
           o = Object.create(o);
-          o.coordinates = geometryType[o.type](o);
-          return o;
+          if(typeof o.type != 'undefined'){
+            
+            o.coordinates = geometryType[o.type](o);
+            return o;
+          }
         }
 
         var geometryType = {

@@ -94,7 +94,7 @@ OpenLayers.Format.JSON = OpenLayers.Class(OpenLayers.Format, {
     read: function(json, filter) {
         var object;
         if (this.nativeJSON) {
-            console.log(json);
+            //console.log(json);
             object = JSON.parse(json, filter);
         } else try {
             /**

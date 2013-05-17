@@ -29,25 +29,33 @@ function geo2topo(geolayers){
 
 function scaleFloor(input_data,scale,translateX,translateY){
 	console.log('scale:'+scale);
-	wierd_name = input_data;
-	for(var y=0;y<input_data.features.length;y++){
-		if(typeof input_data.features[y].geometry != 'undefined'){
+	input_data.features.forEach(function(feature){
+		if(typeof feature.geometry != 'undefined'){
+			if(feature.geometry.type == 'LineString'){
+				for(var x = 0;x < feature.geometry.coordinates.length;x++){
+					if(typeof feature.geometry.coordinates[x] != 'undefined'){
+						testx =  Math.abs((feature.geometry.coordinates[x][0]+translateX)/scale);
+						testy =  Math.abs((feature.geometry.coordinates[x][1]+translateY)/scale);
+						feature.geometry.coordinates[x][0] = testx;
+						feature.geometry.coordinates[x][1] = testy;
+					}
 
-			for(var x = 0;x < input_data.features[y].geometry.coordinates.length;x++){
-				if(typeof input_data.features[y].geometry.coordinates[x] != 'undefined'){
-					console.log("x:"+x+"y:"+y);
-					testx =  Math.abs((input_data.features[y].geometry.coordinates[x][0]+translateX)/scale) || 0;
-					testy =  Math.abs((input_data.features[y].geometry.coordinates[x][1]+translateY)/scale) || 0;
-					wierd_name.features[y].geometry.coordinates[x][0] = testx;
-					wierd_name.features[y].geometry.coordinates[x][1] = testy;
-					console.log('output:'+wierd_name.features[y].geometry.coordinates[x][0]);
 				}
+			}
+			if(feature.geometry.type == 'Polygon'){
+				for(var x = 0;x < feature.geometry.coordinates.length;x++){
+					if(typeof feature.geometry.coordinates[0][x] != 'undefined'){
+						testx =  Math.abs((feature.geometry.coordinates[0][x][0]+translateX)/scale);
+						testy =  Math.abs((feature.geometry.coordinates[0][x][1]+translateY)/scale);
+						feature.geometry.coordinates[0][x][0] = testx;
+						feature.geometry.coordinates[0][x][1] = testy;
+					}
 
+				}
 			}
 		}
-	}
-	
-	return wierd_name;
+	});
+	return input_data;
 }
 
 function geo2Booths(input_data){
@@ -59,6 +67,7 @@ function geo2Booths(input_data){
 		var lmaxY = undefined;
 		var lminY = undefined;
 		if(typeof features[y].geometry != 'undefined'){
+
 			coordinates = features[y].geometry.coordinates[0];
 			for(var x = 0;x < coordinates.length;x++){
 				x_coord = Math.abs(coordinates[x][0]/scale+translateX);
@@ -105,21 +114,42 @@ function findMinMax(input_data){
 	for(var y=0;y<features.length;y++){
 		//console.log(features[y]);
 		if(typeof features[y].geometry != 'undefined'){
-			coordinates = features[y].geometry.coordinates[0];
-			for(var x = 0;x < coordinates.length;x++){
-				x_coord = coordinates[x][0];
-				y_coord = coordinates[x][1];
-				if(typeof maxX == 'undefined' || x_coord > maxX){
-					maxX = x_coord;
+			if(features[y].geometry.type == 'Polygon'){
+				coordinates = features[y].geometry.coordinates[0];
+				for(var x = 0;x < coordinates.length;x++){
+					x_coord = coordinates[x][0];
+					y_coord = coordinates[x][1];
+					if(typeof maxX == 'undefined' || x_coord > maxX){
+						maxX = x_coord;
+					}
+					if(typeof minX == 'undefined' || x_coord < minX){
+						minX = x_coord;
+					}
+					if(typeof maxY == 'undefined' || y_coord > maxY){
+						maxY = y_coord;
+					}
+					if(typeof minY == 'undefined' || y_coord < minY){
+						minY = y_coord;
+					}
 				}
-				if(typeof minX == 'undefined' || x_coord < minX){
-					minX = x_coord;
-				}
-				if(typeof maxY == 'undefined' || y_coord > maxY){
-					maxY = y_coord;
-				}
-				if(typeof minY == 'undefined' || y_coord < minY){
-					minY = y_coord;
+			}
+			if(features[y].geometry.type == 'LineString'){
+				coordinates = features[y].geometry.coordinates;
+				for(var x = 0;x < coordinates.length;x++){
+					x_coord = coordinates[x][0];
+					y_coord = coordinates[x][1];
+					if(typeof maxX == 'undefined' || x_coord > maxX){
+						maxX = x_coord;
+					}
+					if(typeof minX == 'undefined' || x_coord < minX){
+						minX = x_coord;
+					}
+					if(typeof maxY == 'undefined' || y_coord > maxY){
+						maxY = y_coord;
+					}
+					if(typeof minY == 'undefined' || y_coord < minY){
+						minY = y_coord;
+					}
 				}
 			}
 		}

@@ -2,7 +2,7 @@
 
 <?php
  $booths = ['28180'];//$_GET['booths']
- $floor = ['28188'];//$_GET['floor']
+ $floor = ['28178'];//$_GET['floor']
  $event_cycle_id = '333';//$_GET['event_cycle_id']
 ?>
 
@@ -56,27 +56,20 @@ console.log("scaled width:"+ ((maxX/scale)-(minX/scale)));
 console.log("scaled height:"+ ((maxY/scale)-(minY/scale)));
 
 
-console.log(floor_data);
-scaled_floor=scaleFloor(floor_data,scale,translateX,translateY);
-
-console.log(scaled_floor.features[0].geometry.coordinates[0][0]);
-console.log(floor_data.features[0].geometry.coordinates[0][0]);
-console.log(scaled_floor);
+// console.log(floor_data);
+//scaleFloor(floor_data,scale,translateX,translateY);
+//console.log(floor_data.features[0].geometry.coordinates[0][0]);
 topofloor = geo2topo(floor_data);
-topofloor =JSON.stringify(topofloor)
 
-console.log(topofloor);
+//console.log(topofloor);
+//condensed = topoparser.convert(topofloor);
+//console.log(condensed);
 
-
-condensed = topoparser.convert(topofloor);
-console.log(condensed);
-//topofloor = JSON.stringify(floor_data); // Keep as geoJSON
-
-// map_id = createMap(event_cycle_id,topofloor);
-// booth_output = geo2Booths(booth_data);
+map_id = createMap(event_cycle_id,JSON.stringify(topofloor));
+//booth_output = geo2Booths(booth_data);
 // sendToImport(booth_output,event_cycle_id,map_id);
-// console.log('map created');
-// console.log(map_id);
+console.log('map created');
+console.log(map_id);
 
 // test = JSON.parse(topofloor);
 // console.log(test);
