@@ -43,9 +43,9 @@ function scaleFloor(input_data,scale,translateX,translateY){
 				}
 			}
 			if(feature.geometry.type == 'Polygon'){
-				for(var x = 0;x < feature.geometry.coordinates.length;x++){
+				for(var x = 0;x < feature.geometry.coordinates[0].length;x++){
 					if(typeof feature.geometry.coordinates[0][x] != 'undefined'){
-						testx =  Math.abs((feature.geometry.coordinates[0][x][0]+translateX)/scale);
+						testx =  Math.abs((feature.geometry.coordinates[0][x][0]+translateX)/scale);///scale
 						testy =  Math.abs((feature.geometry.coordinates[0][x][1]+translateY)/scale);
 						feature.geometry.coordinates[0][x][0] = testx;
 						feature.geometry.coordinates[0][x][1] = testy;

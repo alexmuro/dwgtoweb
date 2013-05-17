@@ -57,11 +57,11 @@ console.log("scaled height:"+ ((maxY/scale)-(minY/scale)));
 
 
 // console.log(floor_data);
-//scaleFloor(floor_data,scale,translateX,translateY);
-//console.log(floor_data.features[0].geometry.coordinates[0][0]);
+scaleFloor(floor_data,scale,translateX,translateY);
+console.log(floor_data.features[0].geometry.coordinates[0][0]);
 topofloor = geo2topo(floor_data);
 
-//console.log(topofloor);
+console.log(topofloor);
 //condensed = topoparser.convert(topofloor);
 //console.log(condensed);
 

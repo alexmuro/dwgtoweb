@@ -1,7 +1,7 @@
 function getFloorPlan(map_id)
 {
-  //var url = "../data/read/getFloorPlan.php?mid="+map_id;
-  var url ='http://localhost/maps/asGeoJSON/surf_outline.topojson';
+  var url = "../data/read/getFloorPlan.php?mid="+map_id;
+  //var url ='http://localhost/maps/asGeoJSON/surf_outline.topojson';
   var name = 'FloorPlan';
     
     var vectorlayer = new OpenLayers.Layer.Vector(name, { 

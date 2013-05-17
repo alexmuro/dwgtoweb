@@ -50,17 +50,14 @@ OpenLayers.Format.TopoJSON = OpenLayers.Class(OpenLayers.Format.JSON, {
           collections = [collections];
         }
         for (fc_name in obj.objects) {
-          //console.log('53'+fc_name)
           if (!(collections != null) || __indexOf.call(collections, fc_name) >= 0) {
             topo = this.topojson.object(obj, obj.objects[fc_name]);
-            //console.log(topo)
             if(typeof topo.geometries != 'undefined'){
               topo_geom = topo.geometries;
             }
             else if(typeof topo.coordinates != 'undefined'){
               topo_geom = topo.coordinates;
             }
-            //console.log('57 topo geom'+topo_geom);
             for (_i = 0, _len = topo_geom.length; _i < _len; _i++) {
               o = topo_geom[_i];
               if(typeof o != 'undefined'){
@@ -74,7 +71,6 @@ OpenLayers.Format.TopoJSON = OpenLayers.Class(OpenLayers.Format.JSON, {
                     point = new OpenLayers.Geometry.Point(x, y);
                     points.push(point);
                   }
-                  console.log(points);
                 }
                 if(o.type == 'LineString'){
                   _ref = o.coordinates;
@@ -87,31 +83,26 @@ OpenLayers.Format.TopoJSON = OpenLayers.Class(OpenLayers.Format.JSON, {
                   }
                  
                 }
-                //console.log(o.type);
                 //TODO: make sure actually is a Polygon.
                 // TopoJSON can specify other types as well
                 if(o.type == 'Polygon'){
-                  //console.log('poly');
-                  ///console.log(points);
-                  // ring = new OpenLayers.Geometry.LinearRing(points);
-                  // poly = new OpenLayers.Geometry.Polygon(ring);
-                  // feature = new OpenLayers.Feature.Vector(poly);
-                  // if (o.properties != null) {
-                  //   feature.attributes = o.properties;
-                  //   feature.data= o.properties;
-                  // }
-                  // results.push(feature);
+                  ring = new OpenLayers.Geometry.LinearRing(points);
+                  poly = new OpenLayers.Geometry.Polygon(ring);
+                  feature = new OpenLayers.Feature.Vector(poly);
+                  if (o.properties != null) {
+                    feature.attributes = o.properties;
+                    feature.data= o.properties;
+                  }
+                  results.push(feature);
                 }
                 if(o.type == 'LineString'){
-                  // console.log('line');
-                  //console.log(points);
-                  //line = OpenLayers.Geometry.LinearRing(points);
-                  // feature = new OpenLayers.Feature.Vector(line);
-                  // if (o.properties != null) {
-                  //   feature.attributes = o.properties;
-                  //   feature.data= o.properties;
-                  // }
-                  // results.push(feature);
+                  line = new OpenLayers.Geometry.LineString(points);
+                  feature = new OpenLayers.Feature.Vector(line);
+                  if (o.properties != null) {
+                    feature.attributes = o.properties;
+                    feature.data= o.properties;
+                  }
+                  results.push(feature);
                 }
                 
               }

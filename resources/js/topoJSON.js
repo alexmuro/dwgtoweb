@@ -96,17 +96,17 @@ OpenLayers.Format.TopoJSON = OpenLayers.Class(OpenLayers.Format.JSON, {
                     feature.attributes = o.properties;
                     feature.data= o.properties;
                   }
-                  results.push(feature);
+                  //results.push(feature);
                 }
                 if(o.type == 'LineString'){
                   console.log(points)
                   line = OpenLayers.Geometry.LineString(points);
-                  // feature = new OpenLayers.Feature.Vector(line);
-                  // if (o.properties != null) {
-                  //   feature.attributes = o.properties;
-                  //   feature.data= o.properties;
-                  // }
-                  // results.push(feature);
+                  feature = new OpenLayers.Feature.Vector(line);
+                   if (o.properties != null) {
+                     feature.attributes = o.properties;
+                     feature.data= o.properties;
+                   }
+                   results.push(feature);
                 }
                 
               }
