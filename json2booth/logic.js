@@ -70,8 +70,8 @@ function geo2Booths(input_data){
 
 			coordinates = features[y].geometry.coordinates[0];
 			for(var x = 0;x < coordinates.length;x++){
-				x_coord = Math.abs(coordinates[x][0]/scale+translateX);
-				y_coord = Math.abs(coordinates[x][1]/scale+translateY)
+				x_coord = coordinates[x][0]
+				y_coord = coordinates[x][1]
 				if(typeof lmaxX == 'undefined' || x_coord > lmaxX){
 					lmaxX = x_coord;
 				}
@@ -86,9 +86,9 @@ function geo2Booths(input_data){
 				}	
 			}	
 			var outer_points = '';
-			for(var x = 0;x < coordinates.length-1;x++){
-				x_coord = (Math.abs(coordinates[x][0])+translateX/scale)-lminX;
-				y_coord = (Math.abs(coordinates[x][1])+translateY/scale)-lminY;
+			for(var x = 0;x < coordinates.length;x++){
+				x_coord = coordinates[x][0]-lminX;
+				y_coord = coordinates[x][1]-lminY;
 				outer_points += x_coord+','+y_coord+',';
 			}
 		}	

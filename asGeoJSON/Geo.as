@@ -26,7 +26,7 @@ package {
       load_json("expofloor.json","geo");
 	*/		
 			load_json("surf_outline.topojson","topo");
-			//load_json("surf_outline.geojson","geo");
+			load_json("surf_booths.geojson","geo");
 
 			stage.addEventListener( MouseEvent.MOUSE_MOVE, mouse_listener );
 			coordsTextField.x = 300;
@@ -162,9 +162,9 @@ package {
       display_txt.appendText("Num Features: "+String(data.features.length)+"\n");
       
 
-      var scale:Number = 5;//5;//8;
-      var x_offset:int =-5000;//22500;//200;
-      var y_offset:int =00;// 1650;//200;6/
+      var scale:Number = 4.8;//5;//8;
+      var x_offset:int =-900;//22500;//200;
+      var y_offset:int =70;// 1650;//200;6/
 
       x_offset += 1000;
       for(var j:int = 0; j < data.features.length;j++ )

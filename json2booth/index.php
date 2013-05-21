@@ -58,16 +58,19 @@ console.log("scaled height:"+ ((maxY/scale)-(minY/scale)));
 
 // console.log(floor_data);
 scaleFloor(floor_data,scale,translateX,translateY);
-console.log(floor_data.features[0].geometry.coordinates[0][0]);
+//console.log(floor_data.features[0].geometry.coordinates[0][0]);
 topofloor = geo2topo(floor_data);
 
-console.log(topofloor);
+//console.log(topofloor);
 //condensed = topoparser.convert(topofloor);
 //console.log(condensed);
 
 map_id = createMap(event_cycle_id,JSON.stringify(topofloor));
-//booth_output = geo2Booths(booth_data);
-// sendToImport(booth_output,event_cycle_id,map_id);
+scaleFloor(booth_data,scale,translateX,translateY);
+console.log(booth_data);
+booth_output = geo2Booths(booth_data);
+
+sendToImport(booth_output,event_cycle_id,map_id);
 console.log('map created');
 console.log(map_id);
 
