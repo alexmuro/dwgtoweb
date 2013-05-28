@@ -72,14 +72,15 @@ function loadFile($filename)
           $inlayer = trim(substr($theData,7));
           if(!in_array($inlayer,$layers))
           {
+            global $layer_extent;
+            global $file_extent;
             $layers[] = $inlayer;
             $currentLayer = $inlayer;
             $sql = "Insert into `import_layers` (`file_id`,`name`,`num_poly`,`num_text`,`num_lines`,`layer_extent`) 
                     values ($mapid,'$currentLayer',$poly,$text,$line,'".json_encode($layer_extent)."')";
             $layerid = $test->do_insert($sql);
             $layerids[$inlayer] = $layerid;
-            global $layer_extent;
-            global $file_extent;
+            
             //echo 'Layer Extent:'.json_encode($layer_extent).'<br>';
             //echo 'File Extent:'.json_encode($file_extent).'<br>';
             //echo 'Poly:'.$poly.' Text:'.$text.' Line:'.$line.'<br>';
