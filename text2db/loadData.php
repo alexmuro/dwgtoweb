@@ -195,8 +195,10 @@ function parseXY($xy){
     $layer_extent[3] = $y;
   }
 
-
-  return [$x,$y];
+  $output[0] = $x;
+  $output[1] = $y;
+  
+  return $output;
 }
 
 function checkFile($filename)
