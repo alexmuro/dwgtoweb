@@ -56,6 +56,7 @@ $(function () {
                                 $('<p/>').text('Loading... this may take several minutes.').insertAfter('#progress');
                             }
                             }).done(function(data) {
+                                console.log('to txt done');
                                 console.log(data);
                             }).fail(function(e) { 
                                 console.log('error');
