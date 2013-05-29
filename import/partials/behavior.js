@@ -17,14 +17,65 @@ $(document).ready(function() {
 		
 		var count = 0;
 		$.each(filedata, function(k, v) { count++; });
-		var output = '<table id="layer_table" class="tablesorter"><thead><tr><th>Layer Name</th><th>Num Polygons</th><th>Num Text</th><th>Num Lines</th><th>label</th><th>select</th></tr></thead><tbody>';
+		var output = '<table id="layer_table" class="tablesorter"><thead><tr><th>Layer Name</th><th>label</th><th>select</th></tr></thead><tbody>';
 		for (var layer = 0; layer < count-1; layer++)
 		{
-			output += "<tr><td><div class='layer_listing' value='"+filedata[layer].id+"'>"+filedata[layer].id+"-"+filedata[layer].name.substring(0,12)+":</div></td><td>"+filedata[layer].num_poly+"</td><td>"+filedata[layer].num_text+"</td><td>"+filedata[layer].num_lines+"</td><td><input type='checkbox' class='labelcheck' data-layerid='"+filedata[layer].id+"'></td><td><select><option value='none'></option><option value='floor'>Floor</option><option value='booths'>Booths</option><option value='booth_num'>Booth Numbers</option></select></td></tr>";
+			output += "<tr><td><div class='layer_listing' value='"+filedata[layer].id+"'>"+filedata[layer].id+"-"+filedata[layer].name.substring(0,12)+":</div></td><td><input type='checkbox' class='labelcheck' data-layerid='"+filedata[layer].id+"'></td><td><select data-layerid='"+filedata[layer].id+"' class='layer_select'><option value='none'></option><option value='floor'>Floor</option><option value='booths'>Booths</option><option value='booth_num'>Booth Numbers</option></select></td></tr>";
 		}
 		output+='</tbody></table>'
 		$('#file_listing').html(output);
-		$("#layer_table").tablesorter();  
+		$("#layer_table").tablesorter();
+		
+		$('.labelcheck').on('change',function(){
+			console.log('labelcheck on change');
+			if($(this).is(':checked')){
+			
+				var styles = new OpenLayers.StyleMap({
+				    "default": new OpenLayers.Style({
+				        strokeWidth: 2,
+				        fillColor:'#ffccaa',
+				        //label details
+				        label : "${getLabel}",   
+				        fontColor: "black",
+				        fontSize: "10px",
+				        fontFamily: "Courier New, monospace",
+				        fontWeight: "bold",
+				        labelXOffset: "0",
+				        labelYOffset: "0",
+				        labelOutlineColor: "white",
+				        labelOutlineWidth: 3
+				    },
+				    {
+				        context: {
+				            getLabel: function(feature) {
+				                if(String(feature.attributes.meta).trim() == "null") {
+				                    return "";
+				                }
+				                else{
+				                    
+				                    return feature.attributes.meta;
+				                }
+
+				            }
+				        }
+				    }) 
+				});
+				labeled_layer = map.getLayersByName($(this).attr('data-layerid'))[0];
+				labeled_layer.styleMap = styles;
+				labeled_layer.redraw();
+			}else{
+				var styles = new OpenLayers.StyleMap({
+				    "default": new OpenLayers.Style({
+				        strokeWidth: 2,
+				        fillColor:'#ffccaa'
+				    })
+				});
+				labeled_layer = map.getLayersByName($(this).attr('data-layerid'))[0];
+				labeled_layer.styleMap = styles;
+				labeled_layer.redraw();
+			}
+
+		});
 		$(".layer_listing").click(function()
 		{
 			console.log('layer clicked');

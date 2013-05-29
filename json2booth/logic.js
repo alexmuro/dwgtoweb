@@ -4,7 +4,6 @@ function loadData(layers){
 		var layerurl = "../data/read/getLayerGeoJSONmultiple.php";
 		$.ajax( {url:layerurl,type:"POST",data:{layers:layers},async:false} )
 	    .done(function(data) { 
-	    	//console.log(data);
 	    	output_data = JSON.parse(data);
 	    })
 	    .fail(function(data) { console.log(data); });

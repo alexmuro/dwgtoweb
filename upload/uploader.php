@@ -34,8 +34,8 @@ $(function () {
     $('#fileupload').fileupload({
         dataType: 'json',
         done: function (e, data) {
-            console.log('done');
-            console.log(data.result);
+            //console.log('done');
+            //console.log(data.result);
             $.each(data.result.files, function (index, file) {
                 $('<p/>').text(file.name).insertAfter('#progress');
                 if(typeof file.error != 'undefined'){
@@ -47,18 +47,20 @@ $(function () {
                     data: {upload:file.name},
                     type: "POST"
                     }).done(function(data) {
-                        console.log('the file:z'+data+'z');
+                        //console.log('the file:z'+data+'z');
                         $.ajax({
                             url: '../text2db/loadData.php',
                             data: {file:data},
                             type: 'POST',
                             beforeSend: function () {
-                                $('<p/>').text('Loading... this may take several minutes.').insertAfter('#progress');
+                                $('<p/>').text('Loading... this may take several minutes.').insertAfter('#progress').addClass('message');
                             }
                             }).done(function(data) {
-                                console.log('to txt done');
+                                  $('<p/>').text('Map load complete. Please Refresh.').insertAfter('#progress').addClass('message');                       
+                                console.log('to txt done');cd 
                                 console.log(data);
                             }).fail(function(e) { 
+                                    ('<p/>').text('Error Map Converting.').insertAfter('#progress').addClass('message');  
                                 console.log('error');
                                 console.log(e); 
                         });

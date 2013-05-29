@@ -14,7 +14,7 @@ http.createServer(function (req, res) {
     req.on('end', function () {
         var POST = qs.parse(body);
         var geoJSON = JSON.parse(POST.layers);
-       
+    
         var newGeo = {}
         newGeo['type'] = 'FeatureCollection';
         newGeo['features'] = geoJSON.features;
