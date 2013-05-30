@@ -12,18 +12,21 @@
 	map.addLayer(booth_layer);
 	
 	booth_layer.events.register("loadend", booth_layer, function (e) {
-		console.log(booth_layer);
-
+		//console.log(booth_layer);
+		booth_layer.StyleMap = getDefaultStyle();
+		booth_layer.redraw();
+		map.zoomToExtent(booth_layer.getDataExtent());
 	});
 
 
 	floor_layer.events.register("loadend", floor_layer, function (e) {
-		console.log('projection:');
-		console.log(map.getProjectionObject());
-		console.log('load end and move- Extent:');
-		console.log(floor_layer);
-		console.log(floor_layer.getDataExtent());
+
+		floor_layer.StyleMap = getDefaultStyle();
+		floor_layer.redraw();
+		console.log('default style redrawn;')
+		console.log(getDefaultStyle());
 		map.zoomToExtent(floor_layer.getDataExtent());
+		
 	});
 
 </script>

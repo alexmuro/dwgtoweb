@@ -57,7 +57,7 @@ $(function () {
                             }
                             }).done(function(data) {
                                   $('<p/>').text('Map load complete. Please Refresh.').insertAfter('#progress').addClass('message');                       
-                                console.log('to txt done');cd 
+                                console.log('to txt done');
                                 console.log(data);
                             }).fail(function(e) { 
                                     ('<p/>').text('Error Map Converting.').insertAfter('#progress').addClass('message');  

@@ -16,7 +16,7 @@
 map = new OpenLayers.Map({
                     div: "map",
                     allOverlays: true,
-                    maxExtent:[-30000, -30000, 30000, 30000],
+                    maxExtent:[-2800, -2800, 2800, 2800],
                     projection:  new OpenLayers.Projection("EPSG:4326"),
                     controls: [
             new OpenLayers.Control.TouchNavigation({

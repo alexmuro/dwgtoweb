@@ -16,4 +16,4 @@ else
 	print_r($output);
 }
 $cmd = "ogr2ogr -f \"GeoJSON\" '../text2db/txts/".$inputfile.".geojson' $inputfiledir";
-
+exec($cmd,$output,$return);

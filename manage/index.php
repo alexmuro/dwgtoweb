@@ -23,6 +23,7 @@
         
         <!-- Viewer Files -->
         <script type="text/javascript" src='../resources/js/getJson.js'></script>
+        <script type="text/javascript" src='map_functions/getStyle.js'></script>
         
         <!-- Main js file -->
         <script type="text/javascript" src="app.js"></script>
