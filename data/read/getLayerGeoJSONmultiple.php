@@ -2,7 +2,6 @@
 ini_set("memory_limit","1024M");
  ini_set('display_errors','On');
  error_reporting(E_ALL);
-//Pass Map ID by Map ID
 $layerID = $_POST["layers"];
 
 include '../../config/db.php'; 
@@ -29,62 +28,12 @@ $output ['type'] = 'FeatureCollection';
 
 function importToGeoJSONFeature($geodata,$type,$id,$meta)
 {
+     $properties['id'] = $id;
+     $properties['meta'] = $meta;
+     $feature['type'] = 'Feature';
+     $feature['properties'] = $properties;
+     $feature['geometry'] = json_decode($geodata);
 
-
- $properties['id'] = $id;
- $properties['meta'] = trim($meta);
-
- $feature['type'] = 'Feature';
- $feature['properties'] = $properties;
- 
- if($type == 'TEXT')
- {
-    $geometry['type'] = 'Point'; 
- }
- else
- {
-    $geometry['type'] = 'Polygon'; 
- }
- $coordinates[] = array();
- 
- $geo = json_decode($geodata, true);
- $x = 0;
- foreach($geo as $coords)
- {  
-
-    $coordinates[$x][0] = floatval($coords['x']);
-    $coordinates[$x][1] = floatval($coords['y']);
-    $x++;
- }
-
- if($x == 2){
-
-    $geometry['type'] = 'LineString';
-    
- }
- if($geometry['type'] == 'Polygon'){ 
-
-    $geometry['coordinates'][0] = $coordinates;
-
- }
- elseif($geometry['type'] == 'LineString') {
-
-    $geometry['coordinates'] = $coordinates;
-
- }
- elseif($geometry['type'] == 'Point'){
-
-    $geometry['coordinates'] = $coordinates[0];
-
- }
- 
- if($x > 1 || $geometry['type'] == 'Point'){
-
-    $feature['geometry'] = $geometry;
-
- }
-
- return $feature;
-}
-  
+     return $feature;
+}  
 ?>

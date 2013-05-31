@@ -15,5 +15,5 @@ else
 {
 	print_r($output);
 }
-$cmd = "ogr2ogr -f \"GeoJSON\" '../text2db/txts/".$inputfile.".geojson' $inputfiledir";
+$cmd = "ogr2ogr -f \"GeoJSON\" '../text2db/txts/".$inputfile.".geojson' $inputfiledir -dim 2";
 exec($cmd,$output,$return);

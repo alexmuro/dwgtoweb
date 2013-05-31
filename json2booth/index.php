@@ -3,6 +3,7 @@
 <?php
  if(isset($_POST['booths'])){$booths = $_POST['booths'];}else{$booths =array();}
  if(isset($_POST['floor'])){$floor = $_POST['floor'];}else{$floor = array();}
+ 
  //$floor = $_POST['floor'];
  $event_cycle_id = '333';//$_GET['event_cycle_id']
 ?>

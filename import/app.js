@@ -13,18 +13,20 @@
   all kinds of tree nodes.
  */
 
+
+var vector = new OpenLayers.Layer.Vector("vector");
 map = new OpenLayers.Map({
-                    div: "map",
-                    allOverlays: true,
-                    maxExtent:[-60000, -60000, 60000, 60000],
-                    projection:  new OpenLayers.Projection("EPSG:4326"),
-                    controls: [
+            div: "map",
+            allOverlays: true,
+            maxExtent:[-60000, -60000, 60000, 60000],
+            projection:  new OpenLayers.Projection("EPSG:4326"),
+            controls: [
             new OpenLayers.Control.TouchNavigation({
                 dragPanOptions: {
                     enableKinetic: true
                 }
             }),
-            new OpenLayers.Control.Zoom()
+                new OpenLayers.Control.Zoom()
             ]});
 
 map.addControl(
@@ -36,66 +38,123 @@ map.addControl(
                 })
             );
 map.fractionalZoom = true;
-
-
-
-
-// give the features some style
-var styles = new OpenLayers.StyleMap({
-    "default": new OpenLayers.Style( 
-    {
-        strokeWidth: 2,
-        fillColor:'#ffccaa'//,
-        // //label details
-        // label : "${getLabel}",   
-        // fontColor: "black",
-        // fontSize: "10px",
-        // fontFamily: "Courier New, monospace",
-        // fontWeight: "bold",
-        // labelXOffset: "0",
-        // labelYOffset: "0",
-        // labelOutlineColor: "white",
-        // labelOutlineWidth: 3
-    },
-    {
-        context: {
-            getLabel: function(feature) {
-                if(String(feature.attributes.meta).trim() == "null") {
-                    return "";
-                }
-                else{
-                    
-                    return feature.attributes.meta;
-                }
-
-            }
-        }
-    }    
-    ) 
-});
-
-
-var vectors = new OpenLayers.Layer.Vector("Base Layer", {
-                    strategies: [new OpenLayers.Strategy.Fixed()],                
-                    protocol: new OpenLayers.Protocol.HTTP({
-                        //url: "test.json",
-                        url: "../text2db/txts/surfshp/surf_outline.geojson",
-                        format: new OpenLayers.Format.GeoJSON()
-                    }),
-                    styleMap: styles,
-                    renderers: ["Canvas", "SVG", "VML"]
-                });
-   //map.addLayer(vectors); 
+map.addLayers([vector])
 
 Ext.onReady(function() {
     // create a map panel with some layers that we will show in our layer tree
     // below.
+
+    var ctrl, toolbarItems = [], action, actions = {};
+
+
+
+    // Navigation control and DrawFeature controls
+    // in the same toggle group
+    action = new GeoExt.Action({
+        text: "nav",
+        control: new OpenLayers.Control.Navigation(),
+        map: map,
+        // button options
+        toggleGroup: "draw",
+        allowDepress: false,
+        pressed: true,
+        tooltip: "navigate",
+        // check item options
+        group: "draw",
+        checked: true
+    });
+    actions["nav"] = action;
+    toolbarItems.push(action);
+
+    polyOptions = {sides: 4,irregular:true};
+    polygonControl = new OpenLayers.Control.DrawFeature(vector,
+                                            OpenLayers.Handler.RegularPolygon,
+                                            {handlerOptions: polyOptions});
+
+    polygonControl.handler.callbacks.create  = function(data) {
+        if(vector.features.length > 0)
+        {
+            vector.removeAllFeatures();
+        }
+    }
+
+    action = new GeoExt.Action({
+        text: "draw poly",
+        control: polygonControl,
+        map: map,
+        // button options
+        toggleGroup: "draw",
+        allowDepress: false,
+        tooltip: "draw polygon",
+        // check item options
+        group: "draw"
+    });
+    actions["draw_poly"] = action;
+    toolbarItems.push(action);
+
+    // SelectFeature control, a "toggle" control
+    action = new GeoExt.Action({
+        text: "select",
+        control: new OpenLayers.Control.SelectFeature(vector, {
+            type: OpenLayers.Control.TYPE_TOGGLE,
+            hover: true
+        }),
+        map: map,
+        // button options
+        enableToggle: true,
+        tooltip: "select feature"
+    });
+    actions["select"] = action;
+    toolbarItems.push(action);
+    toolbarItems.push("-");
+
+    // Navigation history - two "button" controls
+    ctrl = new OpenLayers.Control.NavigationHistory();
+    map.addControl(ctrl);
+
+    action = new GeoExt.Action({
+        text: "<-",
+        control: ctrl.previous,
+        disabled: true,
+        tooltip: "previous in history"
+    });
+    actions["previous"] = action;
+    toolbarItems.push(action);
+
+    action = new GeoExt.Action({
+        text: "->",
+        control: ctrl.next,
+        disabled: true,
+        tooltip: "next in history"
+    });
+    actions["next"] = action;
+    toolbarItems.push(action);
+    toolbarItems.push("->");
+
+    // Reuse the GeoExt.Action objects created above
+    // as menu items
+    // toolbarItems.push({
+    //     text: "menu",
+    //     menu: new Ext.menu.Menu({
+    //         items: [
+    //             // Nav
+    //             new Ext.menu.CheckItem(actions["nav"]),
+    //             // Draw poly
+    //             new Ext.menu.CheckItem(actions["draw_poly"]),
+    //             // Navigation history control
+    //             actions["previous"],
+    //             actions["next"]
+    //         ]
+    //     })
+    // });
+
+
     mapPanel = new GeoExt.MapPanel({
         border: true,
         region: "center",
-        // we do not want all overlays, to try the OverlayLayerContainer
-        map: map
-        //,tbar: toolbarItems  
+        map: map,
+        tbar: toolbarItems
+  
     });
 
     // create our own layer node UI class, using the TreeNodeUIEventMixin

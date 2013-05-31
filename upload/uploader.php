@@ -49,7 +49,7 @@ $(function () {
                     }).done(function(data) {
                         //console.log('the file:z'+data+'z');
                         $.ajax({
-                            url: '../text2db/loadData.php',
+                            url: '../text2db/geojson2db.php',
                             data: {file:data},
                             type: 'POST',
                             beforeSend: function () {

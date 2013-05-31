@@ -68,7 +68,7 @@ class db {
   $result = @mysql_query($sql);
   $total = @mysql_num_rows($result);
   if (@mysql_error() <> "") {     
-        echo @mysql_error();
+        echo $sql.'<br>'.@mysql_error();
         $result = @mysql_list_processes();
         @mysql_free_result($result);
         die();

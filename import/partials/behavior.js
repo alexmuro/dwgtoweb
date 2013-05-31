@@ -1,4 +1,11 @@
 $(document).ready(function() {
+	var styles = new OpenLayers.StyleMap({
+				    "default": new OpenLayers.Style({
+				        strokeWidth: 2,
+				        fillColor:'#ffccaa'
+				    })
+				});
+
 	$("#test").click(function()
 	{
 		console.log("Base Layer");
@@ -10,10 +17,10 @@ $(document).ready(function() {
 		var url = '../models/getImportFile.php?id='+$(this).val();
 		console.log(url);
 		var filedata = getJson(url);
-		var extent = [filedata['file_extent'][0],filedata['file_extent'][3],filedata['file_extent'][1],filedata['file_extent'][2]];
-		console.log(filedata['file_extent']);
-		console.log(map.getExtent());
-		//map.zoomToExtent(extent);
+		// var extent = [filedata['file_extent'][0],filedata['file_extent'][3],filedata['file_extent'][1],filedata['file_extent'][2]];
+		// console.log(filedata['file_extent']);
+		// console.log(map.getExtent());
+		// //map.zoomToExtent(extent);
 		
 		var count = 0;
 		$.each(filedata, function(k, v) { count++; });
@@ -101,11 +108,11 @@ $(document).ready(function() {
 		        
 					map.addLayer(newLayer);
 					newLayer.events.register("loadend", newLayer, function (e) {
-						console.log('projection:');
-						console.log(map.getProjectionObject());
-						console.log('load end and move- Extent:');
-						console.log(newLayer);
-						map.zoomToExtent(extent);
+						// console.log('projection:');
+						// console.log(map.getProjectionObject());
+						// console.log('load end and move- Extent:');
+						// console.log(newLayer);
+						// //map.zoomToExtent(extent);
 					});
 			}
 			else

@@ -36,56 +36,8 @@ function importToGeoJSONFeature($geodata,$type,$id,$meta)
 
  $feature['type'] = 'Feature';
  $feature['properties'] = $properties;
- 
- if($type == 'TEXT')
- {
-    $geometry['type'] = 'Point'; 
- }
- else
- {
-    $geometry['type'] = 'Polygon'; 
- }
- $coordinates[] = array();
- 
- $geo = json_decode($geodata, true);
- $x = 0;
- foreach($geo as $coords)
- {  
+ $feature['geometry'] = json_decode($geodata);
 
-    $coordinates[$x][0] = floatval($coords['x']);
-    $coordinates[$x][1] = floatval($coords['y']);
-    $x++;
- }
-
- if($x == 2){
-
-    $geometry['type'] = 'LineString';
-    
- }
- if($geometry['type'] == 'Polygon'){ 
-
-    $geometry['coordinates'][0] = $coordinates;
-
- }
- elseif($geometry['type'] == 'LineString') {
-
-    $geometry['coordinates'] = $coordinates;
-
- }
- elseif($geometry['type'] == 'Point'){
-
-    $geometry['coordinates'] = $coordinates[0];
-
- }
- 
- if($x > 1 || $geometry['type'] == 'Point'){
-
-    $feature['geometry'] = $geometry;
-
- }
- //echo '<pre>';
- //print_r($feature);
- //echo '</pre>';
  return $feature;
 }
 
