@@ -1,5 +1,5 @@
 <?php 
-	$inputfile = 'txts/02_VDTA-SDTA_00000214_v2.dxf.geojson';//$_POST['file'];
+	$inputfile = $_POST['file'];
 	exec("cat $inputfile",$output,$return);
 	$Layers = array();
 	foreach($output as $val){
