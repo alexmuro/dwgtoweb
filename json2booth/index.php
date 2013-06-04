@@ -7,7 +7,7 @@
  if(isset($_POST['floor'])){$floor = $_POST['floor'];}else{$floor = array();}
  
  //$floor = $_POST['floor'];
- $event_cycle_id = '333';//$_GET['event_cycle_id']
+ $event_cycle_id = '496';//$_GET['event_cycle_id']
 ?>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
