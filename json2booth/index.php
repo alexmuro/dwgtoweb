@@ -30,8 +30,6 @@ booth_num =  <?php echo json_encode($booth_num);?>;
 bounds =  <?php echo json_encode($bounds);?>;
 event_cycle_id= <?php echo json_encode($event_cycle_id);?>;
 
-console.log(bounds,bounds.length);
-console.log(booth_num);
 
 if(typeof floor[undefined] != '0'){
 	floor_data = loadData(floor);
@@ -41,7 +39,6 @@ if(typeof floor[undefined] != '0'){
 booth_data = loadData(booths);
 booth_num_data = loadData(booth_num);
 
-console.log(floor_data);
 if(bounds.length == 4){
 	minX = bounds[0]*1;
 	maxX = bounds[1]*1;
@@ -68,37 +65,37 @@ translateX = (minX*-1)+padding;
 translateY = (maxY*-1)+padding;
 
 
-console.log("max_X:"+maxX);
-console.log("Min X:"+minX);
-console.log("max_y:"+maxY);
-console.log("Min Y:"+minY);
-console.log("width:"+width);
-console.log("height:"+height);
-console.log("scale:"+scale);
-console.log("translateX:"+ translateX);
-console.log("translateY:"+ translateY);
-console.log("maxY/scale:"+ (maxY/scale));
-console.log("maxX/scale:"+ (maxX/scale));
-console.log("scaled width:"+ ((maxX/scale)-(minX/scale)));
-console.log("scaled height:"+ ((maxY/scale)-(minY/scale)));
+// console.log("max_X:"+maxX);
+// console.log("Min X:"+minX);
+// console.log("max_y:"+maxY);
+// console.log("Min Y:"+minY);
+// console.log("width:"+width);
+// console.log("height:"+height);
+// console.log("scale:"+scale);
+// console.log("translateX:"+ translateX);
+// console.log("translateY:"+ translateY);
+// console.log("maxY/scale:"+ (maxY/scale));
+// console.log("maxX/scale:"+ (maxX/scale));
+// console.log("scaled width:"+ ((maxX/scale)-(minX/scale)));
+// console.log("scaled height:"+ ((maxY/scale)-(minY/scale)));
 
 scaleFloor(floor_data,scale,translateX,translateY);
 topofloor = geo2topo(floor_data);
 
+//console.log('topo',topofloor);
+//console.log('topoparsed',topoparser.convert(topofloor));
 
+topofloor = topoparser.convert(topofloor);
 map_id = createMap(event_cycle_id,JSON.stringify(topofloor));
 scaleFloor(booth_data,scale,translateX,translateY);
 scaleFloor(booth_num_data,scale,translateX,translateY);
 
 booth_output = geo2Booths(booth_data);
-console.log(booth_output);
 
 sendToImport(booth_output,event_cycle_id,map_id);
 
 console.log('map created',map_id);
 $('<p/>').html('Conversion complete.<a href="../manage/?mid='+map_id+'">Manage</a>').insertAfter('#export')
-
-
 
 
 
