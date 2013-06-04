@@ -46,6 +46,32 @@ class db {
     return $this->conn;
 
   }
+  public function exportConnect()
+  {
+    
+        $docroot = $_SERVER['DOCUMENT_ROOT'];
+        if(strstr($docroot,'/var/www/html/maps.marketart.com/current/'))
+        //Mac Default Settings
+        {
+          $this->mysql_host = 'madev.marketart.com';
+          $this->mysql_username = 'passenger';
+          $this->mysql_password = '763MAyah';
+          $this->mysql_database = '4717i2_yah10';
+        }
+        else
+        {
+          $this->mysql_host = 'localhost';
+          $this->mysql_username = 'root';
+          $this->mysql_password = 'am1238wk';
+          $this->mysql_database = 'maps';
+        }
+      $this->conn = mysql_connect($this->mysql_host, $this->mysql_username, $this->mysql_password)
+       or die ("Could not connect: x " . mysql_error() ." ". $this->mysql_host);
+    
+    mysql_select_db($this->mysql_database);
+    return $this->conn;
+
+  }
 
   public function do_query($sql) {
 

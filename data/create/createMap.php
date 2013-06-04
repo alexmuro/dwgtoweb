@@ -6,7 +6,7 @@ $floor_data = $importData['floor_data'];
 include '../../config/db.php'; 
 
 $test = new db();
-$inscon = $test->importConnect();
+$inscon = $test->exportConnect();
 
 
 $hall = 'Hall';

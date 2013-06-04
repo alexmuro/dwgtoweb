@@ -4,7 +4,7 @@ $map_id = $_POST['map_id'];
 //echo json_encode($booths);
 include '../../config/db.php'; 
 $test = new db();
-$inscon = $test->importConnect();
+$inscon = $test->exportConnect();
 $query = 'insert into booths (map_id,x,y,w,h,num,outer_points) values ';
 $num = 'boothnumber';
 

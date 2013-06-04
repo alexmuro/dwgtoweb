@@ -321,8 +321,8 @@ OpenLayers.Format.TopoJSON = OpenLayers.Class(OpenLayers.Format.JSON, {
 
         function geometry(o) {
           o = Object.create(o);
-          if(typeof o.type != 'undefined'){
-            
+          if((typeof o.type != 'undefined') &&(o.type != 'GeometryCollection')){
+                  
             o.coordinates = geometryType[o.type](o);
             return o;
           }

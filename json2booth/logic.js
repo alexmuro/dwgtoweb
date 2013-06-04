@@ -24,10 +24,55 @@ function geo2topo(geolayers){
 	return output_data;
 }
 
+function crop(input_data){
+	drop_list = [];
+	$.each(input_data.features,function(index,feature){
+		drop = true;
+		if(typeof feature.geometry != 'undefined'){
+			drop = false;
+			if(feature.geometry.type == 'LineString'){
+				for(var x = 0;x < feature.geometry.coordinates.length;x++){
+					if(typeof feature.geometry.coordinates[x] != 'undefined'){
+						if(feature.geometry.coordinates[x][0] < minX || feature.geometry.coordinates[x][0] > maxX || feature.geometry.coordinates[x][1] < minY || feature.geometry.coordinates[x][1] > maxY){
+							
+							drop= true;
+						}
+						
+					}
 
+				}
+			}
+			if(feature.geometry.type == 'Polygon'){
+				for(var x = 0;x < feature.geometry.coordinates[0].length;x++){
+					if(typeof feature.geometry.coordinates[0][x] != 'undefined'){
+
+						if(feature.geometry.coordinates[0][x][0] < minX || feature.geometry.coordinates[0][x][0] > maxX || feature.geometry.coordinates[0][x][1] < minY || feature.geometry.coordinates[0][x][1] > maxY){
+							drop = true;
+						}
+						
+					}
+
+				}
+			}
+			if(feature.geometry.type == 'Point'){
+			
+				if(feature.geometry.coordinates[0] < minX || feature.geometry.coordinates[0] > maxX || feature.geometry.coordinates[1] < minY || feature.geometry.coordinates[1] > maxY){
+					drop = true;
+				}
+			}
+		}
+		if(drop){
+			drop_list.push(index);
+		}
+	});
+	drop_list.forEach(function(feat){
+		input_data.features.splice(feat,1);
+	})
+	return input_data;
+
+}
 
 function scaleFloor(input_data,scale,translateX,translateY){
-	console.log('scale:'+scale);
 	input_data.features.forEach(function(feature){
 		if(typeof feature.geometry != 'undefined'){
 			if(feature.geometry.type == 'LineString'){
@@ -52,6 +97,13 @@ function scaleFloor(input_data,scale,translateX,translateY){
 
 				}
 			}
+			if(feature.geometry.type == 'Point'){
+			
+				testx =  Math.abs((feature.geometry.coordinates[0]+translateX)/scale);///scale
+				testy =  Math.abs((feature.geometry.coordinates[1]+translateY)/scale);
+				feature.geometry.coordinates[0] = testx;
+				feature.geometry.coordinates[1] = testy;
+			}
 		}
 	});
 	return input_data;
@@ -66,8 +118,7 @@ function geo2Booths(input_data){
 		var lmaxY = undefined;
 		var lminY = undefined;
 		if(typeof features[y].geometry != 'undefined'){
-
-			coordinates = features[y].geometry.coordinates[0];
+			coordinates = features[y].geometry.coordinates;
 			for(var x = 0;x < coordinates.length;x++){
 				x_coord = coordinates[x][0]
 				y_coord = coordinates[x][1]
@@ -103,15 +154,24 @@ function geo2Booths(input_data){
 	return booths;
 }
 
-function getBoothNum(minX,maxX,minY,maxY){
-	return "01";
+function getBoothNum(fminX,fmaxX,fminY,fmaxY){
+	boothnum = "0";
+	bn_features = booth_num_data.features;
+	for(var y=0;y<bn_features.length;y++){
+		if(bn_features[y].geometry.coordinates[0] > fminX && bn_features[y].geometry.coordinates[0] < fmaxX && bn_features[y].geometry.coordinates[1] > fminY && bn_features[y].geometry.coordinates[1] < fmaxY){
+			boothnum = bn_features[y].properties['meta'];
+			booth_num_data.features.splice(y,1);
+			y = bn_features.length;
+		}
+	}
+	//console.log(boothnum,fminX,fmaxX,fminY,fmaxY);
+	return boothnum;
 }
 
 
 function findMinMax(input_data){
 	features = input_data.features;
 	for(var y=0;y<features.length;y++){
-		//console.log(features[y]);
 		if(typeof features[y].geometry != 'undefined'){
 			if(features[y].geometry.type == 'Polygon'){
 				coordinates = features[y].geometry.coordinates[0];
@@ -165,7 +225,6 @@ function createMap(event_cycle_id,floor_data){
 	import_url = '../data/create/createMap.php'
 	$.ajax( { url:import_url, async:false, type:"POST", data: { create_map:pass_data } })
     	.done(function(data) { 
-    		//console.log(data);
     		output = data;
     	})
     	.fail(function() { console.error("loading error"); });
@@ -173,7 +232,6 @@ function createMap(event_cycle_id,floor_data){
 }
 
 function sendToImport(input_data,event_cycle_id,map_id){
-	import_url = ''
 	for(a=0; a < input_data.length;){
 		var pass_data = []
 		var loop;

@@ -1,4 +1,7 @@
 <?php 
+	ini_set("memory_limit","1024M");
+	ini_set('max_execution_time', 300);
+	
 	$inputfile = $_POST['file'];
 	exec("cat $inputfile",$output,$return);
 	$Layers = array();
@@ -12,17 +15,17 @@
 	}
 
 	include '../config/db.php'; 
-	$test = new db();
-    $inscon = $test->importConnect();
+	$db_conn = new db();
+    $db_conn->importConnect();
 
 	$insert_file = "Insert into import_files (`name`) values ($inputfile)";
-	$file_id =$test->do_insert($insert_file);
+	$file_id =$db_conn->do_insert($insert_file);
 
 	foreach ($Layers as $layer_name => $objects) {
 
 		$insert_layer = "Insert into `import_layers` (`file_id`,`name`,`num_poly`) 
                     values ($file_id,'".mysql_real_escape_string($layer_name)."',".count($objects).")";
-        $layerid = $test->do_insert($insert_layer);
+        $layerid = $db_conn->do_insert($insert_layer);
 		//echo $layer_name.'-'.count($objects).':<br>';
         
         $insert_object = "Insert into `import_objects` (layer_id,geodata,meta) values " ;
@@ -33,13 +36,13 @@
         		$i++;			
         	}
         	else {
-        		$test->do_insert(substr($insert_object,0,-1));	
+        		$db_conn->do_insert(substr($insert_object,0,-1));	
         		$i = 0;
         		$insert_object = "Insert into `import_objects` (layer_id,geodata,meta) values " ;
         		$insert_object .= "($layerid,'".$object['geometry']."','".mysql_real_escape_string($object['meta'])."'),";
         	}		
         }
-        $test->do_insert(substr($insert_object,0,-1));
+        $db_conn->do_insert(substr($insert_object,0,-1));
 	}
 	echo "$inputfile loaded;"
 ?>
