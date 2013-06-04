@@ -3,11 +3,10 @@ $inputfile = $_POST['upload'];
 
 
 $inputfiledir = "'../text2db/uploads/".$inputfile."'";
-$outputfiledir ="'../text2db/txts/".preg_replace('/\s+/', '', $inputfile).".txt'";
+$outputfiledir ="'../text2db/txts/".preg_replace('/\s+/', '', $inputfile).".geojson'";
 
-$cmd = "../text2db/AutoCADConverter $inputfiledir $outputfiledir ";
+$cmd = "ogr2ogr -f \"GeoJSON\" $outputfiledir $inputfiledir -dim 2";
 exec($cmd,$output,$return);
-//print_r($output);
 if(!$return){
 	echo $outputfiledir;
 }
@@ -15,5 +14,3 @@ else
 {
 	print_r($output);
 }
-$cmd = "ogr2ogr -f \"GeoJSON\" '../text2db/txts/".$inputfile.".geojson' $inputfiledir -dim 2";
-exec($cmd,$output,$return);

@@ -15,7 +15,7 @@
 	$test = new db();
     $inscon = $test->importConnect();
 
-	$insert_file = "Insert into import_files (`name`) values ('$inputfile')";
+	$insert_file = "Insert into import_files (`name`) values ($inputfile)";
 	$file_id =$test->do_insert($insert_file);
 
 	foreach ($Layers as $layer_name => $objects) {
