@@ -6,7 +6,6 @@
  if(isset($_POST['booths'])){$booths = $_POST['booths'];}else{$booths =array();}
  if(isset($_POST['floor'])){$floor = $_POST['floor'];}else{$floor = array();}
  
- //$floor = $_POST['floor'];
  $event_cycle_id = '496';//$_GET['event_cycle_id']
 ?>
 
@@ -31,7 +30,7 @@ bounds =  <?php echo json_encode($bounds);?>;
 event_cycle_id= <?php echo json_encode($event_cycle_id);?>;
 
 
-if(typeof floor[undefined] != '0'){
+if(typeof floor[0] != 'undefined'){
 	floor_data = loadData(floor);
 }else{
 	floor_data={};
@@ -67,7 +66,7 @@ translateY = (maxY*-1)+padding;
 
 // console.log("max_X:"+maxX);
 // console.log("Min X:"+minX);
-// console.log("max_y:"+maxY);
+// console.loggi("max_y:"+maxY);
 // console.log("Min Y:"+minY);
 // console.log("width:"+width);
 // console.log("height:"+height);
@@ -82,10 +81,17 @@ translateY = (maxY*-1)+padding;
 scaleFloor(floor_data,scale,translateX,translateY);
 topofloor = geo2topo(floor_data);
 
+
+
 //console.log('topo',topofloor);
 //console.log('topoparsed',topoparser.convert(topofloor));
 
+console.log(floor_data);
+console.log(topofloor);
+
+
 topofloor = topoparser.convert(topofloor);
+
 map_id = createMap(event_cycle_id,JSON.stringify(topofloor));
 scaleFloor(booth_data,scale,translateX,translateY);
 scaleFloor(booth_num_data,scale,translateX,translateY);

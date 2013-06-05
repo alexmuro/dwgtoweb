@@ -28,7 +28,7 @@ $(document).ready(function() {
 
 		$.each($('.layer_select'),function(){
 			
-			if($(this).val()=='floor'){floor_layers.push($(this).attr('data-layerid'));}
+			if($(this).val()=='floor'){ floor_layers.push($(this).attr('data-layerid'));}
 			else if($(this).val()=='booths'){booth_layers.push($(this).attr('data-layerid'));}
 			else if($(this).val()=='booth_num'){booth_numbers.push($(this).attr('data-layerid'));}
 				
@@ -43,7 +43,7 @@ $(document).ready(function() {
           }
           }).done(function(data) {
                 $('<p/>').html('Conversion complete. ').insertAfter('#export');
-                //console.log(data);
+                
                 $('<p/>').html(data).insertAfter('#export');                        
           }).fail(function(e) { 
                   ('<p/>').text('Error Map Converting.').insertAfter('#export').addClass('message');  
