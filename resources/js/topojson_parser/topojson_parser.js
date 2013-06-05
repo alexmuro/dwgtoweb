@@ -30,7 +30,8 @@ var topoparser =  {
 
 		this.transform = topology.transform;
 		this.cleanseTransform(); 
-
+		if(isNaN(this.transform.translate[0])){ this.transform.translate[0] = 0; }
+		if(isNaN(this.transform.translate[1])){ this.transform.translate[1] = 0; }
 
 		var keys = Object.keys(this.topology.objects);
 		
@@ -54,9 +55,10 @@ var topoparser =  {
 
 		return arc.map(function(point)
 		{
+			console.log(point[0],transform.scale[0],transform.translate[0]);
 			return [
-				Math.floor((((x += point[0]) * transform.scale[0] + transform.translate[0]) / scale) + offset.x),
-				Math.floor((((y += point[1]) * transform.scale[1] + transform.translate[1]) / scale) + offset.y)
+				Math.abs(Math.floor((((x += point[0]) * transform.scale[0] + transform.translate[0]) + offset.x ) / scale  )),
+				Math.abs(Math.floor((((y += point[1]) * transform.scale[1] + transform.translate[1]) + offset.y )/ scale  ))
 			];
 		});
 	},
@@ -115,7 +117,6 @@ var topoparser =  {
 					arc = arcs[reverserArcIndex];
 					coordinates = this.arcToCoordinates(arc).reverse();	
 				}
-
 				this.optimizedGeometries.push(coordinates);	
 				
 			}

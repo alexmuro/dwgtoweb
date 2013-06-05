@@ -55,30 +55,30 @@ width = Math.abs(maxX+(minX*-1));
 height = Math.abs(maxY+(minY*-1));
 
 if(width >= height){
-	scale = (width-(padding*2)) / max_square;
+	scale = (width) / max_square;
 }else{
-	scale = (height-(padding*2)) / max_square;
+	scale = (height) / max_square;
 }
 
-translateX = (minX*-1)+padding;
-translateY = (maxY*-1)+padding;
+translateX = (minX*-1);
+translateY = (maxY*-1);
 
 
-// console.log("max_X:"+maxX);
-// console.log("Min X:"+minX);
-// console.loggi("max_y:"+maxY);
-// console.log("Min Y:"+minY);
-// console.log("width:"+width);
-// console.log("height:"+height);
-// console.log("scale:"+scale);
-// console.log("translateX:"+ translateX);
-// console.log("translateY:"+ translateY);
-// console.log("maxY/scale:"+ (maxY/scale));
-// console.log("maxX/scale:"+ (maxX/scale));
-// console.log("scaled width:"+ ((maxX/scale)-(minX/scale)));
-// console.log("scaled height:"+ ((maxY/scale)-(minY/scale)));
+console.log("max_X:"+maxX);
+console.log("Min X:"+minX);
+console.log("max_y:"+maxY);
+console.log("Min Y:"+minY);
+console.log("width:"+width);
+console.log("height:"+height);
+console.log("scale:"+scale);
+console.log("translateX:"+ translateX);
+console.log("translateY:"+ translateY);
+console.log("maxY/scale:"+ (maxY/scale));
+console.log("maxX/scale:"+ (maxX/scale));
+console.log("scaled width:"+ ((maxX/scale)-(minX/scale)));
+console.log("scaled height:"+ ((maxY/scale)-(minY/scale)));
 
-scaleFloor(floor_data,scale,translateX,translateY);
+scaleGeoJSON(floor_data,scale,translateX,translateY);
 topofloor = geo2topo(floor_data);
 
 
@@ -89,19 +89,22 @@ topofloor = geo2topo(floor_data);
 console.log(floor_data);
 console.log(topofloor);
 
-
+//topoparser.scale = scale;
+//topoparser.offset = { x:translateY, y:translateY }
 topofloor = topoparser.convert(topofloor);
 
+console.log(topofloor);
+
 map_id = createMap(event_cycle_id,JSON.stringify(topofloor));
-scaleFloor(booth_data,scale,translateX,translateY);
-scaleFloor(booth_num_data,scale,translateX,translateY);
+scaleGeoJSON(booth_data,scale,translateX,translateY);
+scaleGeoJSON(booth_num_data,scale,translateX,translateY);
 
 booth_output = geo2Booths(booth_data);
 
 sendToImport(booth_output,event_cycle_id,map_id);
 
 console.log('map created',map_id);
-$('<p/>').html('Conversion complete.<a href="../manage/?mid='+map_id+'">Manage</a>').insertAfter('#export')
+$('<p/>').html('Conversion complete.<a href="http://admin.marketart.us/floormanager/?k=1&showid=496&mid='+map_id+'&sid=496">Manage</a>').insertAfter('#export')
 
 
 

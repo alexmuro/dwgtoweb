@@ -56,14 +56,18 @@ class db {
           $this->mysql_host = 'madev.marketart.com';
           $this->mysql_username = 'marketart';
           $this->mysql_password = '763MAyah';
-          $this->mysql_database = '4717i2_yah10';
+          $this->mysql_database = '471712_yah10';
         }
         else
         {
-          $this->mysql_host = 'localhost';
-          $this->mysql_username = 'root';
-          $this->mysql_password = 'am1238wk';
-          $this->mysql_database = 'maps';
+          $this->mysql_host = 'madev.marketart.com';
+          $this->mysql_username = 'marketart';
+          $this->mysql_password = '763MAyah';
+          $this->mysql_database = '471712_yah10';
+          // $this->mysql_host = 'localhost';
+          // $this->mysql_username = 'root';
+          // $this->mysql_password = 'am1238wk';
+          // $this->mysql_database = 'maps';
         }
       $this->conn = mysql_connect($this->mysql_host, $this->mysql_username, $this->mysql_password)
        or die ("Could not connect: x " . mysql_error() ." ". $this->mysql_host);

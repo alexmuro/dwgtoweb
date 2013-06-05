@@ -43,7 +43,7 @@ $xml_booth_styles ='<boothstyles>
 
 $xml_map ='<map scale="1.0">
 	  <floorplan x="" y="" w="" h="" type="" rotation="0" >
-	  <topojson>'.$floor_data.'</topojson>
+	  <topology>'.$floor_data.'</topology>
 	  </floorplan>
 	  <mask x="" y="" w="" h="" enabled="0" />
 	  <background x="" y="" w="" h="" />
@@ -52,7 +52,7 @@ $xml_map ='<map scale="1.0">
 $facility_id = 315;
 
 
-$query = "Insert into maps (show_id,hall,floor,file,scale,xml_boothsizes,xml_boothstyles,xml_map,facility_id) values ($event_cycle_id,'$hall','$floor','$file',$scale,'$xml_booth_sizes','$xml_booth_styles','$xml_map',$facility_id)";
+$query = "Insert into maps (event_cycle_id,hall,floor,file,scale,xml_booth_sizes,xml_booth_styles,xml_map,facility_id) values ($event_cycle_id,'$hall','$floor','$file',$scale,'$xml_booth_sizes','$xml_booth_styles','$xml_map',$facility_id)";
 $map_id = $test->do_insert($query);
 
 echo json_encode($map_id);

@@ -72,8 +72,11 @@ function crop(input_data){
 
 }
 
-function scaleFloor(input_data,scale,translateX,translateY){
+function scaleGeoJSON(input_data,scale,translateX,translateY){
 	input_data.features.forEach(function(feature){
+		if(feature.geometry.type == 'GeometryCollection'){
+			scaleGeometryCollection(feature.geometry.geometries,scale,translateX,translateY);
+		}
 		if(typeof feature.geometry != 'undefined'){
 			if(feature.geometry.type == 'LineString'){
 				for(var x = 0;x < feature.geometry.coordinates.length;x++){
@@ -103,6 +106,46 @@ function scaleFloor(input_data,scale,translateX,translateY){
 				testy =  Math.abs((feature.geometry.coordinates[1]+translateY)/scale);
 				feature.geometry.coordinates[0] = testx;
 				feature.geometry.coordinates[1] = testy;
+			}
+		}
+	});
+	return input_data;
+}
+
+function scaleGeometryCollection(input_data,scale,translateX,translateY){
+	input_data.forEach(function(geometry){
+		if(geometry.type == 'GeometryCollection'){
+			scaleGeometryCollection(geometry.geometries);
+		}
+		if(typeof geometry != 'undefined'){
+			if(geometry.type == 'LineString'){
+				for(var x = 0;x < geometry.coordinates.length;x++){
+					if(typeof geometry.coordinates[x] != 'undefined'){
+						testx =  Math.abs((geometry.coordinates[x][0]+translateX)/scale);
+						testy =  Math.abs((geometry.coordinates[x][1]+translateY)/scale);
+						geometry.coordinates[x][0] = testx;
+						geometry.coordinates[x][1] = testy;
+					}
+
+				}
+			}
+			if(geometry.type == 'Polygon'){
+				for(var x = 0;x < geometry.coordinates[0].length;x++){
+					if(typeof geometry.coordinates[0][x] != 'undefined'){
+						testx =  Math.abs((geometry.coordinates[0][x][0]+translateX)/scale);///scale
+						testy =  Math.abs((geometry.coordinates[0][x][1]+translateY)/scale);
+						geometry.coordinates[0][x][0] = testx;
+						geometry.coordinates[0][x][1] = testy;
+					}
+
+				}
+			}
+			if(geometry.type == 'Point'){
+			
+				testx =  Math.abs((geometry.coordinates[0]+translateX)/scale);///scale
+				testy =  Math.abs((geometry.coordinates[1]+translateY)/scale);
+				geometry.coordinates[0] = testx;
+				geometry.coordinates[1] = testy;
 			}
 		}
 	});
