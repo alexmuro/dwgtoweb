@@ -55,7 +55,6 @@ var topoparser =  {
 
 		return arc.map(function(point)
 		{
-			console.log(point[0],transform.scale[0],transform.translate[0]);
 			return [
 				Math.abs(Math.floor((((x += point[0]) * transform.scale[0] + transform.translate[0]) + offset.x ) / scale  )),
 				Math.abs(Math.floor((((y += point[1]) * transform.scale[1] + transform.translate[1]) + offset.y )/ scale  ))
