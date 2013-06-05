@@ -54,7 +54,7 @@ class db {
         //Mac Default Settings
         {
           $this->mysql_host = 'madev.marketart.com';
-          $this->mysql_username = 'passenger';
+          $this->mysql_username = 'marketart';
           $this->mysql_password = '763MAyah';
           $this->mysql_database = '4717i2_yah10';
         }
